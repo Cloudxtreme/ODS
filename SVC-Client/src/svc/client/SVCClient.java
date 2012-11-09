@@ -30,12 +30,15 @@ public class SVCClient {
             for (int k = 0; k < Constants.NR_SEGMENTS; k++) {
 
                 // create a thread for each URI
-                GetSegment[] threads = new GetSegment[Constants.PORTS.length];
-                for (int i = 0; i < threads.length; i++) {
-                    String location = "";
+                Thread[] threads = new Thread[Constants.PORTS.length+1];
+                for (int i = 0; i < Constants.PORTS.length; i++) {
+                    //Location ~= serverlocatie:8080/video_s0_l0.dat
+                    String location = "http://" + Constants.SERVER_LOCATION + ":" + Constants.PORTS[i] + "/video_s" + k + "_l" + i + ".dat";
                     HttpGet httpget = new HttpGet(location);
                     threads[i] = new GetSegment(httpclient,httpget,i);
                 }
+                
+                threads[Constants.PORTS.length] = new CloseConnectionsThread(cm);
 
                 // start the threads
                 for (int j = 0; j < threads.length; j++) {

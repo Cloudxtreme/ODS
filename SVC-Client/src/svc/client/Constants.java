@@ -11,7 +11,7 @@ package svc.client;
 public class Constants {
     //Set constants
 
-    public static final int NR_SEGMENTS = 50;
+    public static final int NR_SEGMENTS = 3;
     public static final long MILLISECONDS = 1024;
     public static final String SERVER_LOCATION = "location";
     public static final int[] PORTS = {8080, 8081, 8082, 8083};
