@@ -30,13 +30,17 @@ public class GetSegment extends Thread {
         this.id = id;
     }
 
+    public HttpGet getHttpget() {
+        return httpget;
+    }
+    
+    
+
     @Override
-    public synchronized void start() {
+    public synchronized void run() {
         System.out.println(id + " - about to get something from " + httpget.getURI());
 
         try {
-
-            httpClient.getParams().setParameter("http.socket.timeout", Constants.MILLISECONDS);
          
             // execute the method
             HttpResponse response = httpClient.execute(httpget, context);
@@ -54,6 +58,7 @@ public class GetSegment extends Thread {
             System.out.println(id + " - error: " + e);
         }
     }
+    
     
     
 }

@@ -13,7 +13,6 @@ import org.apache.http.impl.conn.PoolingClientConnectionManager;
  *
  * @author svrijders
  */
-
 public class SVCClient {
 
     /**
@@ -30,23 +29,31 @@ public class SVCClient {
             for (int k = 0; k < Constants.NR_SEGMENTS; k++) {
 
                 // create a thread for each URI
-                Thread[] threads = new Thread[Constants.PORTS.length+1];
+                GetSegment[] threads = new GetSegment[Constants.PORTS.length];
                 for (int i = 0; i < Constants.PORTS.length; i++) {
                     //Location ~= serverlocatie:8080/video_s0_l0.dat
                     String location = "http://" + Constants.SERVER_LOCATION + ":" + Constants.PORTS[i] + "/video_s" + k + "_l" + i + ".dat";
                     HttpGet httpget = new HttpGet(location);
-                    threads[i] = new GetSegment(httpclient,httpget,i);
+                    threads[i] = new GetSegment(httpclient, httpget, i);
                 }
-                
-                threads[Constants.PORTS.length] = new CloseConnectionsThread(cm);
+
+
 
                 // start the threads
                 for (int j = 0; j < threads.length; j++) {
                     threads[j].start();
                 }
 
+                //Wait for x seconds on the next fragment
+                try {
+                    Thread.sleep(Constants.MILLISECONDS);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+
                 // join the threads
                 for (int j = 0; j < threads.length; j++) {
+                    threads[j].getHttpget().abort();
                     threads[j].join();
                 }
 
