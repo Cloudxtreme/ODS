@@ -36,6 +36,8 @@ public class GetSegment extends Thread {
 
         try {
 
+            httpClient.getParams().setParameter("http.socket.timeout", Constants.MILLISECONDS);
+            
             // execute the method
             HttpResponse response = httpClient.execute(httpget, context);
 
@@ -44,7 +46,7 @@ public class GetSegment extends Thread {
             HttpEntity entity = response.getEntity();
             if (entity != null) {
                 byte[] bytes = EntityUtils.toByteArray(entity);
-                System.out.println(id + " - " + bytes.length + " bytes read");
+                System.out.println(id + " - " + httpget.getURI() + " - " + bytes.length + " bytes read");
             }
 
         } catch (Exception e) {
@@ -57,6 +59,10 @@ public class GetSegment extends Thread {
         httpget.abort();
         
         //Generate stats
+        
+        
+        //kill thread
+        
     }
     
 }
