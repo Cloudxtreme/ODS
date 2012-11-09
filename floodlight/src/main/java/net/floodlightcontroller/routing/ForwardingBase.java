@@ -71,7 +71,7 @@ public abstract class ForwardingBase
     protected static Logger log =
             LoggerFactory.getLogger(ForwardingBase.class);
 
-    protected static int OFMESSAGE_DAMPER_CAPACITY = 50000; // TODO: find sweet spot
+    protected static int OFMESSAGE_DAMPER_CAPACITY = 10000; // TODO: find sweet spot
     protected static int OFMESSAGE_DAMPER_TIMEOUT = 250; // ms 
 
     public static short FLOWMOD_DEFAULT_IDLE_TIMEOUT = 5; // in seconds
@@ -199,7 +199,7 @@ public abstract class ForwardingBase
             message="Failure writing flow mod",
             explanation="An I/O error occurred while writing a " +
                         "flow modification to a switch",
-            recommendation=LogMessageDoc.CHECK_SWITCH),            
+            recommendation=LogMessageDoc.CHECK_SWITCH)            
     })
     public boolean pushRoute(Route route, OFMatch match, 
                              Integer wildcard_hints,
@@ -265,7 +265,7 @@ public abstract class ForwardingBase
             ((OFActionOutput)fm.getActions().get(0)).setPort(outPort);
 
             try {
-                counterStore.updatePktOutFMCounterStore(sw, fm);
+                counterStore.updatePktOutFMCounterStoreLocal(sw, fm);
                 if (log.isTraceEnabled()) {
                     log.trace("Pushing Route flowmod routeIndx={} " + 
                             "sw={} inPort={} outPort={}",
@@ -277,6 +277,7 @@ public abstract class ForwardingBase
                 messageDamper.write(sw, fm, cntx);
                 if (doFlush) {
                     sw.flush();
+                    counterStore.updateFlush();
                 }
 
                 // Push the packet out the source switch
@@ -333,7 +334,7 @@ public abstract class ForwardingBase
             message="Failure writing packet out",
             explanation="An I/O error occurred while writing a " +
                     "packet out to a switch",
-            recommendation=LogMessageDoc.CHECK_SWITCH),            
+            recommendation=LogMessageDoc.CHECK_SWITCH)            
     })
     public void pushPacket(IPacket packet, 
                            IOFSwitch sw,
@@ -383,7 +384,7 @@ public abstract class ForwardingBase
         po.setLength(poLength);
 
         try {
-            counterStore.updatePktOutFMCounterStore(sw, po);
+            counterStore.updatePktOutFMCounterStoreLocal(sw, po);
             messageDamper.write(sw, po, cntx, flush);
         } catch (IOException e) {
             log.error("Failure writing packet out", e);
@@ -466,7 +467,7 @@ public abstract class ForwardingBase
         po.setLength(poLength);
 
         try {
-            counterStore.updatePktOutFMCounterStore(sw, po);
+            counterStore.updatePktOutFMCounterStoreLocal(sw, po);
             messageDamper.write(sw, po, cntx);
         } catch (IOException e) {
             log.error("Failure writing packet out", e);
@@ -518,7 +519,7 @@ public abstract class ForwardingBase
         po.setLength(poLength);
 
         try {
-            counterStore.updatePktOutFMCounterStore(sw, po);
+            counterStore.updatePktOutFMCounterStoreLocal(sw, po);
             if (log.isTraceEnabled()) {
                 log.trace("write broadcast packet on switch-id={} " + 
                         "interfaces={} packet-out={}",
@@ -602,7 +603,7 @@ public abstract class ForwardingBase
             message="Failure writing deny flow mod",
             explanation="An I/O error occurred while writing a " +
                     "deny flow mod to a switch",
-            recommendation=LogMessageDoc.CHECK_SWITCH),            
+            recommendation=LogMessageDoc.CHECK_SWITCH)            
     })
     public static boolean
             blockHost(IFloodlightProviderService floodlightProvider,
