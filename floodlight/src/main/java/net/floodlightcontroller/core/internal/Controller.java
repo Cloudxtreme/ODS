@@ -574,6 +574,7 @@ public class Controller implements IFloodlightProviderService,
         @Override
         public void messageReceived(ChannelHandlerContext ctx, MessageEvent e)
                 throws Exception {
+        	//log.debug("Got packet");
             if (e.getMessage() instanceof List) {
                 @SuppressWarnings("unchecked")
                 List<OFMessage> msglist = (List<OFMessage>)e.getMessage();
@@ -587,6 +588,7 @@ public class Controller implements IFloodlightProviderService,
                         // exception through the channel again by passing in 
                         // ctx.getChannel().
                         Channels.fireExceptionCaught(ctx.getChannel(), ex);
+                        
                     }
                 }
 
