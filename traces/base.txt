@@ -1,14 +1,3 @@
-# This trace was obtained from trace.eas.asu.edu
-# Sequence: Sony Demo
-# Resolution: 1920x1088
-# FPS: 30
-# Encoder: JSVM (9.19.7)
-# Encoding type: High (Level 4)
-# GoP pattern: G16B3
-# Quantization parameters (I,P,B): 48, 48, 51
-# CGS base layer: 0
-# Other: DQP 10, 3 EL
-# Frame Time [s] Type Size [Byte] PSNR-Y [dB] PSNR-U [dB] PSNR-V [dB] VQM (if exists)
 0;0;I;504;41.97382;188.1308;188.1308
 1;0.03333;B;114;41.75004;188.1308;188.1308
 2;0.06667;B;114;41.50988;188.1308;188.1308
@@ -9993,4 +9982,3 @@
 9981;332.7;B;784;28.80744;38.40189;38.63415
 9982;332.73333;B;1334;29.4785;38.59393;38.91621
 9983;332.76667;B;546;29.78289;38.67963;38.9888
-	

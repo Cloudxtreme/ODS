@@ -1,0 +1,49 @@
+#!/usr/bin/perl
+#use strict;    # turn on compiler restrictions
+$|++;    # do not buffer output
+
+my $file            = "";
+my @field           = ();
+my $line            = 1;
+my $count           = 0;
+my $specific_number = 2;
+
+
+$num_args = $#ARGV + 1;
+if ($num_args != 1) {
+  print "\nUsage: segments.pl trace.txt\n";
+  exit;
+}
+
+open( INFILE, "parse.csv" )
+  or die("Can not open input file: $!");
+
+while ( $file = <INFILE> ) {
+    @field = parse_csv($file);
+    chomp(@field);
+
+    if ( $field[0] eq $specific_number ) {
+        print "Found $specific_number on line $line:";
+        print "Column 2=$field[1], Column 3=$field[2]\n";
+        $count++;
+    }
+    $line++;
+}
+
+close(INFILE);
+
+print "Found $specific_number $count times\n";
+
+exit;
+
+sub parse_csv {
+    my $text = shift;
+    my @new  = ();
+    push( @new, $+ ) while $text =~ m{
+       "([^\"\\]*(?:\\.[^\"\\]*)*)",?
+           |  ([^,]+),?
+           | ,
+       }gx;
+    push( @new, undef ) if substr( $text, -1, 1 ) eq ',';
+    return @new;
+}
