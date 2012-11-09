@@ -74,6 +74,8 @@ public class IPv4 extends BasePacket {
     public byte getVersion() {
         return version;
     }
+    
+
 
     /**
      * @param version the version to set
@@ -371,10 +373,14 @@ public class IPv4 extends BasePacket {
         } else {
             payload = new Data();
         }
-        this.payload = payload.deserialize(data, bb.position(), bb.limit()-bb.position());
+        int payloadLength = this.totalLength - this.headerLength * 4;
+        int remLength = bb.limit()-bb.position();
+        if (remLength < payloadLength)
+            payloadLength = bb.limit()-bb.position();
+        this.payload = payload.deserialize(data, bb.position(), payloadLength);
         this.payload.setParent(this);
 
-        if (this.totalLength != length)
+        if (this.totalLength > length)
             this.isTruncated = true;
         else
             this.isTruncated = false;
