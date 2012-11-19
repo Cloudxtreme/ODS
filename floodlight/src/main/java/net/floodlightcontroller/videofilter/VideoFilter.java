@@ -16,6 +16,7 @@ import net.floodlightcontroller.core.types.SwitchMessagePair;
 import net.floodlightcontroller.packet.Ethernet;
 import net.floodlightcontroller.packet.ICMP;
 import net.floodlightcontroller.packet.IPv4;
+import net.floodlightcontroller.topology.ITopologyService;
 
 import org.openflow.protocol.OFMessage;
 import org.openflow.protocol.OFType;
@@ -26,6 +27,7 @@ import org.slf4j.LoggerFactory;
 public class VideoFilter implements IOFMessageListener, IFloodlightModule {
 
 	protected IFloodlightProviderService floodlightProvider;
+	protected ITopologyService topologyservice;
 	protected ConcurrentCircularBuffer<SwitchMessagePair> videopackets;
 	protected static Logger logger;
 	
@@ -69,6 +71,8 @@ public class VideoFilter implements IOFMessageListener, IFloodlightModule {
 	public void init(FloodlightModuleContext context)
 			throws FloodlightModuleException {
 	    floodlightProvider = context.getServiceImpl(IFloodlightProviderService.class);
+	    topologyservice = context.getServiceImpl(ITopologyService.class);
+	    
 	    videopackets = new ConcurrentCircularBuffer<SwitchMessagePair>(SwitchMessagePair.class, 100);
 	    logger = LoggerFactory.getLogger(VideoFilter.class);
 
@@ -86,6 +90,9 @@ public class VideoFilter implements IOFMessageListener, IFloodlightModule {
 		Ethernet eth = IFloodlightProviderService.bcStore.get(cntx,
                                             IFloodlightProviderService.CONTEXT_PI_PAYLOAD);
         Short type = eth.getEtherType();
+        
+   
+        
         
         if (type == eth.TYPE_IPv4) {
             IPv4 ippacket = (IPv4)eth.getPayload();
