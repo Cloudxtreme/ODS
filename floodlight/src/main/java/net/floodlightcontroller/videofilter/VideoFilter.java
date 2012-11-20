@@ -2,7 +2,11 @@ package net.floodlightcontroller.videofilter;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import net.floodlightcontroller.core.FloodlightContext;
 import net.floodlightcontroller.core.IFloodlightProviderService;
@@ -18,7 +22,13 @@ import net.floodlightcontroller.packet.ICMP;
 import net.floodlightcontroller.packet.IPv4;
 
 import org.openflow.protocol.OFMessage;
+import org.openflow.protocol.OFPort;
+import org.openflow.protocol.OFStatisticsRequest;
 import org.openflow.protocol.OFType;
+import org.openflow.protocol.statistics.OFPortStatisticsReply;
+import org.openflow.protocol.statistics.OFPortStatisticsRequest;
+import org.openflow.protocol.statistics.OFStatistics;
+import org.openflow.protocol.statistics.OFStatisticsType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,6 +87,7 @@ public class VideoFilter implements IOFMessageListener, IFloodlightModule {
 	@Override
 	public void startUp(FloodlightModuleContext context) {
 		floodlightProvider.addOFMessageListener(OFType.PACKET_IN, this);
+		floodlightProvider.addOFMessageListener(OFType.STATS_REPLY, this);
 
 	}
 
@@ -91,22 +102,8 @@ public class VideoFilter implements IOFMessageListener, IFloodlightModule {
             IPv4 ippacket = (IPv4)eth.getPayload();
         	logger.info("New IPv4 message found. \n  {} \n",
                     eth.toString());
-            if (ippacket.getProtocol() == IPv4.PROTOCOL_ICMP) {
-            	/*// Stats breaks shit
-            	try {
-            		Future<List<OFStatistics>> future = sw.getStatistics(new OFStatisticsRequest());
-            		List<OFStatistics> stats = future.get();
-            		logger.info("Switch stats: {} \n",
-            				stats.toString());
-            		
-            	} catch (IOException e) {} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ExecutionException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				*/
+            if (ippacket.getProtocol() == IPv4.PROTOCOL_ICMP) {           	            	
+				
             	ICMP icmp = (ICMP)ippacket.getPayload();
             	logger.info("New ICMP message found. \n  {} \n",
                         ippacket.toString());
