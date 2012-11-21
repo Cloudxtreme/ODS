@@ -1,24 +1,137 @@
 package net.floodlightcontroller.core;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.TimerTask;
+import java.util.concurrent.Future;
+
+import org.openflow.protocol.OFPort;
+import org.openflow.protocol.OFStatisticsRequest;
+import org.openflow.protocol.statistics.OFPortStatisticsReply;
+import org.openflow.protocol.statistics.OFPortStatisticsRequest;
+import org.openflow.protocol.statistics.OFStatistics;
+import org.openflow.protocol.statistics.OFStatisticsType;
+
 
 /**
- * 
+ * Class that will periodically retrieve statistics of all switches
  * @author youri
  *
  */
-public interface NetworkStatistics {
+public class NetworkStatistics extends TimerTask {
 
-	/**
-	 * Returns the load of all switches in the network
-	 * @return a map with the loads of all switches
-	 */
-	public Map<IOFSwitch, Long> networkLoad();
+	//the floodlight provider
+	protected IFloodlightProviderService floodlightProvider;
+	
+	//the rate at which this task will be executed
+	protected int period;
+	
+	//a map with the previous loads of switches in the network
+	protected static Map<IOFSwitch, Long> loadHistory;
+	
+	//a map that keeps record of the current load
+	protected static Map<IOFSwitch, Long> currentLoad;
 	
 	/**
-	 * Returns the load a specific switch in the network
-	 * @param sw the switch
-	 * @return the load of the given switch
+	 * Creates a new statistics task
+	 * @param floodlightProvider the floodlight provider
+	 * @param period the rate at which the statistics have to be polled
 	 */
-	public Long switchLoad(IOFSwitch sw);
+	public NetworkStatistics(IFloodlightProviderService floodlightProvider, int period){
+		this.floodlightProvider = floodlightProvider;
+		this.period = period;
+		loadHistory = new HashMap<IOFSwitch, Long>();
+		currentLoad = new HashMap<IOFSwitch, Long>();
+	}
+	
+	/**
+	 * Called periodically to retrieve all port statistics of all switches
+	 */
+	@Override
+	public synchronized void run() {
+		//get a list of all the switches found
+		Map<Long,IOFSwitch> switches = floodlightProvider.getSwitches();				
+		Collection<IOFSwitch> swList = switches.values();		
+		Iterator<IOFSwitch> it = swList.iterator();
+		
+		//for each switch, retrieve the statistics
+		while(it.hasNext()){
+			IOFSwitch sw = it.next();
+			List<OFStatistics> stats = new ArrayList<OFStatistics>();
+			
+			//make a statistics request			
+		    OFStatisticsRequest req = new OFStatisticsRequest();
+		    req.setStatisticType(OFStatisticsType.PORT);
+            req.setXid(sw.getNextTransactionId());
+		    
+            //fill it with a specific request
+		    OFPortStatisticsRequest specReq = new OFPortStatisticsRequest();
+		    specReq.setPortNumber(OFPort.OFPP_NONE.getValue());
+		    stats.add((OFStatistics)specReq);
+		    req.setStatistics(stats);
+		    req.setLengthU(req.getLengthU() + specReq.getLength());
+		    
+		    //attempt to retrieve the statistics
+		    Future<List<OFStatistics>> future = null;
+		    List<OFStatistics> values = null;
+		    
+		    try {
+		    	future = sw.getStatistics(req);
+		    	values = future.get();		    	
+		    } catch (Exception e){
+		    	System.err.println("Exception while retrieving statistics for switch: " + sw + " " + e);
+		    } 
+		    		    
+		    //process the statistics
+		    if(!values.isEmpty()){
+		    	OFPortStatisticsReply reply = (OFPortStatisticsReply)values.get(0);		    	
+		    	 
+		    	//determine the new load
+		    	long newload = 0;		    	
+		    	if(currentLoad.containsKey(sw)){
+		    		//we've seen the switch before
+		    		newload = reply.getTransmitBytes() - loadHistory.get(sw);
+			    	loadHistory.put(sw, reply.getTransmitBytes());  		
+		    	} else {
+		    		//this is the first time we see the switch
+		    		newload = reply.getTransmitBytes();		
+		    		loadHistory.put(sw,newload);
+		    	}				    	
+		    	
+		    	currentLoad.put(sw, newload / (period / 1000));
+		    	//System.out.println("Load for switch: " + transmittedBytes.get(sw) + " bytes/second");
+		    }
+		}
+	}
+	
+	/**
+	 * Determines the load of all the switches in the network
+	 * @return a map with loads of all switches or null if the network has no switches
+	 */
+	public static synchronized Map<IOFSwitch, Long> networkLoad(){
+		//return the whole map with loads
+		if(!currentLoad.isEmpty()){
+			return currentLoad;
+		} else {
+			return null;
+		}		
+	}
+	
+	/**
+	 * Determines the load of a specific switch 
+	 * @param sw the switch
+	 * @return the load of the given switch or null if the switch is not in the network
+	 */
+	public static synchronized Long switchLoad(IOFSwitch sw){	
+		//lookup the load in the map
+		if(currentLoad != null && currentLoad.containsKey(sw)){
+			return loadHistory.get(sw);
+		} else {
+			return null;
+		}
+	}	
 }

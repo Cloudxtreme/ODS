@@ -48,9 +48,9 @@ public class Main {
         
         // Timer
         Timer timer = new Timer();
-        int period = 30000;
+        int period = 10000;
         int delay = 0;
-        timer.scheduleAtFixedRate(new StatsTask(controller,period), delay, period);
+        timer.scheduleAtFixedRate(new NetworkStatistics(controller,period), delay, period);
         
         // This call blocks, it has to be the last line in the main
         controller.run();
