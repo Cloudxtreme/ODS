@@ -118,6 +118,8 @@ public class VideoFilter implements IOFMessageListener, IFloodlightModule {
 				log.info("New IPv4 message found. \n  {} \n", eth.toString());
 
 				// For debugging purposes in mininet only
+				//The method for forwarding should be put in a separate method afterwards, 
+				//since it will be repeated four times...
 				if (ippacket.getProtocol() == IPv4.PROTOCOL_ICMP) {
 
 					// ICMP icmp = (ICMP)ippacket.getPayload();
