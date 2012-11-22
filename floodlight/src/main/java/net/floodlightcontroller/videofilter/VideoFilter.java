@@ -2,11 +2,7 @@ package net.floodlightcontroller.videofilter;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 import net.floodlightcontroller.core.FloodlightContext;
 import net.floodlightcontroller.core.IFloodlightProviderService;
@@ -19,18 +15,13 @@ import net.floodlightcontroller.core.module.IFloodlightModule;
 import net.floodlightcontroller.core.module.IFloodlightService;
 import net.floodlightcontroller.core.types.SwitchMessagePair;
 import net.floodlightcontroller.packet.Ethernet;
-import net.floodlightcontroller.packet.ICMP;
 import net.floodlightcontroller.packet.IPv4;
+import net.floodlightcontroller.packet.TCP;
 import net.floodlightcontroller.topology.ITopologyService;
 
+import org.apache.thrift.protocol.TCompactProtocol;
 import org.openflow.protocol.OFMessage;
-import org.openflow.protocol.OFPort;
-import org.openflow.protocol.OFStatisticsRequest;
 import org.openflow.protocol.OFType;
-import org.openflow.protocol.statistics.OFPortStatisticsReply;
-import org.openflow.protocol.statistics.OFPortStatisticsRequest;
-import org.openflow.protocol.statistics.OFStatistics;
-import org.openflow.protocol.statistics.OFStatisticsType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +30,6 @@ public class VideoFilter implements IOFMessageListener, IFloodlightModule {
 
 	protected IFloodlightProviderService floodlightProvider;
 	protected ITopologyService topologyservice;
-	protected ConcurrentCircularBuffer<SwitchMessagePair> videopackets;
 	protected static Logger logger;
 	
 	@Override
@@ -83,8 +73,7 @@ public class VideoFilter implements IOFMessageListener, IFloodlightModule {
 			throws FloodlightModuleException {
 	    floodlightProvider = context.getServiceImpl(IFloodlightProviderService.class);
 	    topologyservice = context.getServiceImpl(ITopologyService.class);
-	    
-	    videopackets = new ConcurrentCircularBuffer<SwitchMessagePair>(SwitchMessagePair.class, 100);
+
 	    logger = LoggerFactory.getLogger(VideoFilter.class);
 
 	}
@@ -103,20 +92,37 @@ public class VideoFilter implements IOFMessageListener, IFloodlightModule {
                                             IFloodlightProviderService.CONTEXT_PI_PAYLOAD);
         Short type = eth.getEtherType();
         
-   
-        
-        
-        if (type == eth.TYPE_IPv4) {
+        if (type == Ethernet.TYPE_IPv4) {
             IPv4 ippacket = (IPv4)eth.getPayload();
         	logger.info("New IPv4 message found. \n  {} \n",
                     eth.toString());
+
+        	//For debugging purposes in mininet only
             if (ippacket.getProtocol() == IPv4.PROTOCOL_ICMP) {           	            	
 				
-            	ICMP icmp = (ICMP)ippacket.getPayload();
+            	//ICMP icmp = (ICMP)ippacket.getPayload();
             	logger.info("New ICMP message found. \n  {} \n",
                         ippacket.toString());
-            	videopackets.add(new SwitchMessagePair(sw, msg));
+            	
+            	
+            	
             }
+            
+            
+        	//Get the TCP port of the packet
+        	TCP tcppacket =  (TCP) ippacket.getPayload();
+        	int port = tcppacket.getSourcePort();
+        	
+        	if(port == Constants.BASE){
+        		
+        	}else if (port == Constants.ENHANCE1){
+        		
+        	} else if (port == Constants.ENHANCE2){
+        		
+        	} else if (port == Constants.ENHANCE3){
+        		
+        	}
+        	
         }
         return Command.CONTINUE;
 	}
