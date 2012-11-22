@@ -54,9 +54,8 @@ public class VideoFilter implements IOFMessageListener, IFloodlightModule {
 
 	public static short FLOWMOD_DEFAULT_IDLE_TIMEOUT = 5; // in seconds
 	public static short FLOWMOD_DEFAULT_HARD_TIMEOUT = 0; // infinite
-	protected static int OFMESSAGE_DAMPER_CAPACITY = 10000; // TODO: find sweet
-	public static final int FORWARDING_APP_ID = 2; // TODO: This must be managed
-	// by a global APP_ID class // spot
+	protected static int OFMESSAGE_DAMPER_CAPACITY = 10000;
+	public static final int FORWARDING_APP_ID = 2;
 	protected static int OFMESSAGE_DAMPER_TIMEOUT = 250; // ms
 
 	@Override
@@ -66,25 +65,21 @@ public class VideoFilter implements IOFMessageListener, IFloodlightModule {
 
 	@Override
 	public boolean isCallbackOrderingPrereq(OFType type, String name) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isCallbackOrderingPostreq(OFType type, String name) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public Collection<Class<? extends IFloodlightService>> getModuleServices() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Map<Class<? extends IFloodlightService>, IFloodlightService> getServiceImpls() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -251,7 +246,7 @@ public class VideoFilter implements IOFMessageListener, IFloodlightModule {
 					if (!srcDap.equals(dstDap) && (srcCluster != null)
 							&& (dstCluster != null)) {
 
-						// INSERT DIJKSTRA HERE FOR OUR VIDEO FLOWS
+						// TODO: INSERT DIJKSTRA HERE FOR OUR VIDEO FLOWS
 						// AND CALCULATE FLOWS
 						Route route;
 
@@ -355,8 +350,7 @@ public class VideoFilter implements IOFMessageListener, IFloodlightModule {
 				// for the
 				// source switch. The removal message is used to maintain the
 				// flow
-				// cache. Don't set the flag for ARP messages - TODO generalize
-				// check
+				// cache. Don't set the flag for ARP messages 
 				if ((requestFlowRemovedNotifn)
 						&& (match.getDataLayerType() != Ethernet.TYPE_ARP)) {
 					fm.setFlags(OFFlowMod.OFPFF_SEND_FLOW_REM);
@@ -385,8 +379,6 @@ public class VideoFilter implements IOFMessageListener, IFloodlightModule {
 
 				// Push the packet out the source switch
 				if (sw.getId() == pinSwitch) {
-					// TODO: Instead of doing a packetOut here we could also
-					// send a flowMod with bufferId set....
 					pushPacket(sw, match, pi, outPort, cntx);
 					srcSwitchIncluded = true;
 				}
