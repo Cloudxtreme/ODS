@@ -1,7 +1,6 @@
 package net.floodlightcontroller.topology;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -11,7 +10,6 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 
-import org.openflow.protocol.OFPhysicalPort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
