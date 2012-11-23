@@ -651,7 +651,19 @@ public class TopologyInstance {
 			Map<Link, Integer> linkCost = new HashMap<Link, Integer>();
 
 			if (tcpport == 8080) {
-				
+				for (NodePortTuple nt : tunnelPorts) {
+					if (switchPortLinks.get(npt) == null)
+						continue;
+					for (Link link : switchPortLinks.get(npt)) {
+						if (link == null)
+							continue;
+						
+						//Here you have the link, now add a weight
+						
+						
+						linkCost.put(link, weight);
+					}
+				}
 			} else if (tcpport == 8081) {
 
 			} else if (tcpport == 8082) {
