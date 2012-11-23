@@ -400,16 +400,16 @@ Gaston Crommenlaan 8 bus 201, 9050 Gent, Belgium}
 
 \begin{abstract}
 %\boldmath
-In current IP networks, routing is done on the minimum hop count from sender to receiver 
-which means there is no inherent support for Quality of Service. IP is a best-effort protocol 
-which means zero packet loss is not guaranteed. This is unsatisfactory if we want to deliver qualitative, 
+In current IP networks, routes are based on the hop count from sender to receiver 
+without keeping in mind the throughput and packet loss. IP is a best-effort protocol 
+whcih means zero packet loss is not guaranteed. This is unsatisfactory if we want to deliver qualitative, 
 scalable video streams. This paper presents a framework and algorithms used to provide 
 Quality of Service (\textit{QoS}) support for scalable video streaming in an OpenFlow network. 
 First we route the base layer of SVC encoded videos as a 
-high priority QoS flow while the enhancement layers are routed at a lower QoS or as a best effort flow. 
+lossless-QoS flow while the enhancement layers are routed as a lossy-QoS or best effort flow. 
 Second, we provide failure recovery so the OpenFlow network can converge back to an optimal 
-state when links fail. We show that using different costs to calculate paths for different flows 
-can improve the overall throughput of video streams when network convergence and delay occur.
+state when links go down. We show that using different costs to calculate paths for QoS flows 
+can improve the overall throughput of video streams when network convergence and delay occurs.
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
 % This preserves the distinction between vectors and scalars. However,
@@ -532,53 +532,44 @@ to the controller if the packet does not match any forwarding entry.
 We route SVC encoded video streams as a QoS flow, where we consider the base layer as a 
 high priority QoS flow and the enhancement layer as either a lower QoS flow or as best effort traffic. 
 These principals are shown in Figure \ref{fig_sim}. A filter on the controller separates QoS flows from 
-other traffic, after which the controller can choose a path for the different layers. 
-When the controller calculates a path for a layer, the new forwarding rules are sent to the switches.\\
+other traffic, after which the controller can choose a path for the different layers.\\
 
-\begin{figure*}[htb]
+\begin{figure}[htb]
 \centering
 \includegraphics[width=\linewidth]{fig/SVC_OpenFlow_flow}
 \caption{Simulation Results}
 \label{fig_sim}
-\end{figure*}
+\end{figure}
 
-We defined a cost function which can be used to calculate the cost of a path.
-The cost function is based on the following observations. (Insert ref here)
+This was one of the first tasks we performed during our research: to
+  find me
+ trics, besides the hop count, which can be used to calculate the cost of a path to transfer zero packet loss QoS traffic. These metrics are part of a cost function which the routing algorithm will attempt to minimize when calculating optimal paths. We made similar assumptions about QoS-routing as those made in [4] and [5] before defining a cost function:
 \begin{itemize}
-	\item When high priority QoS flows are forwarded on the same link as best effort traffic, there will be packet loss in the best effort flow to prioritize the QoS flow.
-	\item Metrics for QoS flows must be different than those used for best effort traffic. The shortest path and QoS path must be different to obtain good results. 
-	If both follow the same path, the best effort traffic will experience more packet loss.
+	\item When lossless-QoS flows are forwarded on the same link as best effort traffic, there will be packet loss in the best effort flow to prioritise the QoS flow.
+	\item Metrics for QoS flows must be different than those used for best effort traffic. The shortest path and QoS path must be different to get decent results. If both follow the same path, the best effort traffic will be completely sacrificed for the sake of the lossless-QoS base layer.
 	\item Calculating a path for a new QoS flow does not change the best effort routing tables. The packet loss of best effort traffic caused by QoS flows must be considered during path selection.
 	\item The length of alternative paths for QoS flows should still be kept as short as possible to optimize transfer time.
-	\item Best effort traffic can be used as a reference to retrieve metrics from a switch or link, such as packet loss or to estimate the amount of traffic on that route.
+	\item Best effort traffic can be used as a reference to retreive metrics from a switch or link, such as packet loss or to estimate the amount of traffic on that route.
 \end{itemize}
-
-These observations show that packet loss and path length are part of our cost function: 
-the cost function must find a balance between maintaining low packet loss of the best effort 
-traffic and the delay of QoS flows, caused by using longer paths.\\
-
-Furthermore, the controller 
-must be able to obtain these metrics at any time from any switch in the network before calculating 
-new flow tables. We implemented a monitor module on the controller to gather all network 
-statistics. Besides polling for statistics, a switch must also forward events to the controller when 
-they occur, such as an link going down or a flow experiencing packet loss. These events provide 
-additional monitoring data for the routing algorithms on the controller.\\
+These assumptions indicate that packet loss and path length are part of our cost function: the cost function must find a balance between maintaining low packet loss of the best effort traffic and the delay of QoS flows, caused by using longer paths.\\Furthermore, the Controller must be able to obtain these metrics at any time from any switch in the network before calculating new flow tables. This is why we implemented a monitor module on the Controller to gather all network statistics. Besides polling for statistics, a switch must also forward events to the Controller when they occur, such as an adjacent link going down or a flow experiencing packet loss. These events provide additional monitoring data for the routing algorithms on the Controller.\\Decisions made by the Controller are sent to the switches as updated forwarding tables. When the shortest path can still ensure zero packet loss, the Dijkstra shortest path algorithm is executed, which is the default implementation
+  in Floo
+ dlight.
 
 \section{QoS Routing}
-Must ensure zero packet loss base layer, optimize other traffic ... cost function?
+Must ensure zero packet loss base layer, optimise other traffic ... cost function?
 Go from theoretical cost function to exact function in code?
---> Yes
+
 
 
 \section{Evaluation}
-Test scenario (client/server - filter based on port) + metrics for result + present results\\
+Test scenario (client/sever - filter based on port) + metrics for result + present results\\
 An evaluation metric has to represent a value which is relevant to what we want to improve, which is why a measurement must:
 \begin{itemize}
 	\item represent the quality of the received video
 	\item represent the performance of the network
 	\item represent the impact on best effort traffic
 \end{itemize}
-To measure quality of the video we have chosen for the PSNR value of the received video compared to the raw footage. The higher the PSNR value, the better the frames were preserved during transfer. To measure the performance of the network we used the bitrate of all traffic. We also show the packet loss of best effort traffic caused by prioritizing the QoS flow...
+To measure quality of the video we have chosen for the PSNR value of the received video compared to the raw footage. The higher the PSNR value, the better the frames were preserved during transfer. To measure the performance of the network we used the bitrate of all traffic. We also show the packet loss of best effort traffic caused by prioritising the QoS flow...
 
 
 

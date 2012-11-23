@@ -1,0 +1,239 @@
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.8.1)  23 NOV 2012 12:00
+entering extended mode
+ %&-line parsing enabled.
+**paper.tex
+(./paper.tex
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
+yphenation, loaded.
+(./IEEEtran.cls
+Document Class: IEEEtran 2007/03/05 V1.7a by Michael Shell
+-- See the "IEEEtran_HOWTO" manual for usage information.
+-- http://www.michaelshell.org/tex/ieeetran/
+\@IEEEtrantmpdimenA=\dimen102
+\@IEEEtrantmpdimenB=\dimen103
+\@IEEEtrantmpcountA=\count79
+\@IEEEtrantmpcountB=\count80
+\@IEEEtrantmptoksA=\toks14
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 366.
+
+(/usr/share/texmf-texlive/tex/latex/psnfss/ot1ptm.fd
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
+)
+-- Using 8.5in x 11in (letter) paper.
+-- Using PDF output.
+\@IEEEnormalsizeunitybaselineskip=\dimen104
+-- This is a 10 point document.
+\CLASSINFOnormalsizebaselineskip=\dimen105
+\CLASSINFOnormalsizeunitybaselineskip=\dimen106
+\IEEEnormaljot=\dimen107
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 724.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <5> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 724.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 724.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 724.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 724.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <8> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 724.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 724.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 724.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 724.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 724.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <11> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 724.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <11> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 724.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 724.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 724.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 724.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <17> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 724.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <20> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 724.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <20> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 724.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 724.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <24> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 724.
+\IEEEilabelindentA=\dimen108
+\IEEEilabelindentB=\dimen109
+\IEEEilabelindent=\dimen110
+\IEEEelabelindent=\dimen111
+\IEEEdlabelindent=\dimen112
+\IEEElabelindent=\dimen113
+\IEEEiednormlabelsep=\dimen114
+\IEEEiedmathlabelsep=\dimen115
+\IEEEiedtopsep=\skip41
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@IEEEsubequation=\count85
+\abovecaptionskip=\skip42
+\belowcaptionskip=\skip43
+\c@figure=\count86
+\c@table=\count87
+\@IEEEeqnnumcols=\count88
+\@IEEEeqncolcnt=\count89
+\@IEEEtmpitemindent=\dimen116
+\c@IEEEbiography=\count90
+\@IEEEtranrubishbin=\box26
+) (/usr/share/texmf-texlive/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks15
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/etc/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2009/08/28 v1.8 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+
+(/usr/share/texmf-texlive/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2010/03/12 v0.04p Graphics/color for pdfTeX
+\Gread@gobject=\count91
+))
+\Gin@req@height=\dimen117
+\Gin@req@width=\dimen118
+) (./paper.aux)
+\openout1 = `paper.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 351.
+LaTeX Font Info:    ... okay on input line 351.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 351.
+LaTeX Font Info:    ... okay on input line 351.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 351.
+LaTeX Font Info:    ... okay on input line 351.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 351.
+LaTeX Font Info:    ... okay on input line 351.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 351.
+LaTeX Font Info:    ... okay on input line 351.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 351.
+LaTeX Font Info:    ... okay on input line 351.
+
+(/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count92
+\scratchdimen=\dimen119
+\scratchbox=\box27
+\nofMPsegments=\count93
+\nofMParguments=\count94
+\everyMPshowfont=\toks16
+\MPscratchCnt=\count95
+\MPscratchDim=\dimen120
+\MPnumerator=\count96
+\everyMPtoPDFconversion=\toks17
+)
+Underfull \hbox (badness 10000) in paragraph at lines 439--456
+
+ []
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 477.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 477.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 477.
+
+Overfull \hbox (6.6462pt too wide) in paragraph at lines 477--484
+ [][] 
+ []
+
+<fig/openflow1.png, id=1, 435.74559pt x 232.39764pt>
+File: fig/openflow1.png Graphic file (type png)
+ <use fig/openflow1.png>
+Overfull \hbox (9.44937pt too wide) in paragraph at lines 490--491
+ [][] 
+ []
+
+[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+
+
+ <./fig/openflow1.png (PNG copy)>]
+Underfull \hbox (badness 10000) in paragraph at lines 505--519
+
+ []
+
+
+Underfull \hbox (badness 1946) in paragraph at lines 520--527
+\OT1/ptm/m/n/10 By rout-ing the base layer as a lossless-QoS flow we
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 520--527
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 529--537
+
+ []
+
+<fig/SVC_OpenFlow_flow.png, id=10, 614.295pt x 307.90031pt>
+File: fig/SVC_OpenFlow_flow.png Graphic file (type png)
+
+<use fig/SVC_OpenFlow_flow.png>
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 548.
+
+Underfull \hbox (badness 10000) in paragraph at lines 556--559
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 560--566
+
+ []
+
+(./paper.bbl)
+
+** Conference Paper **
+Before submitting the final camera ready copy, remember to:
+
+ 1. Manually equalize the lengths of two columns on the last page
+ of your paper;
+
+ 2. Ensure that any PostScript and/or PDF output post-processing
+ uses only Type 1 fonts and that every step in the generation
+ process uses the appropriate paper size.
+
+[2] [3 <./fig/SVC_OpenFlow_flow.png (PNG copy)>] (./paper.aux) ) 
+Here is how much of TeX's memory you used:
+ 1610 strings out of 495061
+ 24906 string characters out of 1182622
+ 81423 words of memory out of 3000000
+ 4817 multiletter control sequences out of 15000+50000
+ 36554 words of font info for 70 fonts, out of 3000000 for 9000
+ 31 hyphenation exceptions out of 8191
+ 26i,8n,19p,378b,293s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/share/tex
+mf-texlive/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-texlive/fonts/type1/pu
+blic/amsfonts/cm/cmsy7.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmb
+8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmbi8a.pfb></usr/share/
+texmf-texlive/fonts/type1/urw/times/utmr8a.pfb></usr/share/texmf-texlive/fonts/
+type1/urw/times/utmri8a.pfb>
+Output written on paper.pdf (3 pages, 287255 bytes).
+PDF statistics:
+ 35 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+
