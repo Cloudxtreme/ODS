@@ -15,6 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.floodlightcontroller.util.ClusterDFS;
+import net.floodlightcontroller.core.IOFSwitch;
+import net.floodlightcontroller.core.NetworkStatistics;
 import net.floodlightcontroller.core.annotations.LogMessageCategory;
 import net.floodlightcontroller.core.annotations.LogMessageDoc;
 import net.floodlightcontroller.routing.BroadcastTree;
@@ -584,12 +586,18 @@ public class TopologyInstance {
         }
     }
 
-    protected Route buildroute(RouteId id, long srcId, long dstId) {
+    protected Route buildroute(RouteId id, long srcId, long dstId, int tcpport) {
         NodePortTuple npt;
 
         LinkedList<NodePortTuple> switchPorts =
                 new LinkedList<NodePortTuple>();
-
+        
+        //TODO: Construct a map with link weights
+        Map<IOFSwitch, Long> load = NetworkStatistics.networkLoad();
+        
+        //TODO: Re-call calculateShortestPathTreeInCluster with link weights
+        
+        
         if (destinationRootedTrees == null) return null;
         if (destinationRootedTrees.get(dstId) == null) return null;
 
@@ -624,6 +632,9 @@ public class TopologyInstance {
         if (log.isTraceEnabled()) {
             log.trace("buildroute: {}", result);
         }
+        
+        calculateShortestPathTreeInClusters();
+        
         return result;
     }
 
@@ -651,7 +662,7 @@ public class TopologyInstance {
     }
 
     protected Route getRoute(long srcId, short srcPort,
-                             long dstId, short dstPort) {
+                             long dstId, short dstPort, int tcpport) {
 
 
         // Return null the route source and desitnation are the
@@ -661,7 +672,7 @@ public class TopologyInstance {
 
         List<NodePortTuple> nptList;
         NodePortTuple npt;
-        Route r = getRoute(srcId, dstId);
+        Route r = getRoute(srcId, dstId, tcpport);
         if (r == null && srcId != dstId) return null;
 
         if (r != null) {
@@ -679,13 +690,13 @@ public class TopologyInstance {
         return r;
     }
 
-    protected Route getRoute(long srcId, long dstId) {
+    protected Route getRoute(long srcId, long dstId, int tcpport) {
         RouteId id = new RouteId(srcId, dstId);
         Route result = null;
         if (pathcache.containsKey(id)) {
             result = pathcache.get(id);
         } else {
-            result = buildroute(id, srcId, dstId);
+            result = buildroute(id, srcId, dstId, tcpport);
             pathcache.put(id, result);
         }
         if (log.isTraceEnabled()) {

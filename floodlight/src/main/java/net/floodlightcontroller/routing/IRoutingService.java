@@ -36,7 +36,10 @@ public interface IRoutingService extends IFloodlightService {
     public Route getRoute(long srcId, short srcPort, 
                              long dstId, short dstPort, 
                              boolean tunnelEnabled);
-
+    public Route getRoute(long srcId, short srcPort, 
+                             long dstId, short dstPort, int tcpport);
+    
+    
     /** Check if a route exists between src and dst, including tunnel links
      *  in the path.
      */

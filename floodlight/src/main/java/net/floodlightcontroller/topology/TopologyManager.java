@@ -515,7 +515,7 @@ public class TopologyManager implements
     @Override
     public Route getRoute(long src, long dst, boolean tunnelEnabled) {
         TopologyInstance ti = getCurrentInstance(tunnelEnabled);
-        return ti.getRoute(src, dst);
+        return ti.getRoute(src, dst, 0);
     }
 
     @Override
@@ -526,10 +526,14 @@ public class TopologyManager implements
     @Override
     public Route getRoute(long src, short srcPort, long dst, short dstPort, 
                           boolean tunnelEnabled) {
-        TopologyInstance ti = getCurrentInstance(tunnelEnabled);
-        return ti.getRoute(src, srcPort, dst, dstPort);
+        return getRoute(src, srcPort, dst, dstPort, 0);
     }
 
+    public Route getRoute(long src, short srcPort, long dst, short dstPort, int tcpport) {
+    	 TopologyInstance ti = getCurrentInstance(true);
+         return ti.getRoute(src, srcPort, dst, dstPort, tcpport);
+    }
+    
     @Override
     public boolean routeExists(long src, long dst) {
         return routeExists(src, dst, true);
