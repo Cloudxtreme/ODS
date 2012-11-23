@@ -143,23 +143,10 @@ public class VideoFilter implements IOFMessageListener, IFloodlightModule {
 
 					// TODO: Call doForwardFlow with the calculated weights
 					// change doForwardFlow args...
-					doForwardFlow(sw, pi, cntx);
+					//doForwardFlow(sw, pi, cntx);
 				}
 
-				// Get the TCP port of the packet
-				TCP tcppacket = (TCP) ippacket.getPayload();
-				int port = tcppacket.getSourcePort();
-
-				if (port == Constants.BASE) {
-
-				} else if (port == Constants.ENHANCE1) {
-
-				} else if (port == Constants.ENHANCE2) {
-
-				} else if (port == Constants.ENHANCE3) {
-
-				}
-
+				
 			}
 		}
 		return Command.CONTINUE;
@@ -592,42 +579,42 @@ public class VideoFilter implements IOFMessageListener, IFloodlightModule {
     
     
     protected Route buildroute(RouteId id, long srcId, long dstId) {
-    	
-    	Map<Long, BroadcastTree> destinationRootedTrees = new HashMap<Long, BroadcastTree>();
-    	Map<Link, Integer> linkCost = new HashMap<Link, Integer>();
-    	Set<Cluster> clusters = topology
-    	
-    	
-    	
-    	for(Cluster c: clusters) {
-            for (Long node : c.links.keySet()) {
-                BroadcastTree tree = dijkstra(c, node, linkCost, true);
-                destinationRootedTrees.put(node, tree);
-            }
-        }
-    	
+//    	
+//    	Map<Long, BroadcastTree> destinationRootedTrees = new HashMap<Long, BroadcastTree>();
+//    	Map<Link, Integer> linkCost = new HashMap<Link, Integer>();
+//    	Set<Cluster> clusters = topology
+//    	
+//    	
+//    	
+//    	for(Cluster c: clusters) {
+//            for (Long node : c.links.keySet()) {
+//                BroadcastTree tree = dijkstra(c, node, linkCost, true);
+//                destinationRootedTrees.put(node, tree);
+//            }
+//        }
+//    	
     	
         NodePortTuple npt;
 
         LinkedList<NodePortTuple> switchPorts =
                 new LinkedList<NodePortTuple>();
 
-        if (destinationRootedTrees.get(dstId) == null) return null;
+//        if (destinationRootedTrees.get(dstId) == null) return null;
+//
+//        Map<Long, Link> nexthoplinks =
+//                destinationRootedTrees.get(dstId).getLinks();
 
-        Map<Long, Link> nexthoplinks =
-                destinationRootedTrees.get(dstId).getLinks();
-
-        if ((nexthoplinks!=null) && (nexthoplinks.get(srcId)!=null)) {
-            while (srcId != dstId) {
-                Link l = nexthoplinks.get(srcId);
-
-                npt = new NodePortTuple(l.getSrc(), l.getSrcPort());
-                switchPorts.addLast(npt);
-                npt = new NodePortTuple(l.getDst(), l.getDstPort());
-                switchPorts.addLast(npt);
-                srcId = nexthoplinks.get(srcId).getDst();
-            }
-        }
+//        if ((nexthoplinks!=null) && (nexthoplinks.get(srcId)!=null)) {
+//            while (srcId != dstId) {
+//                Link l = nexthoplinks.get(srcId);
+//
+//                npt = new NodePortTuple(l.getSrc(), l.getSrcPort());
+//                switchPorts.addLast(npt);
+//                npt = new NodePortTuple(l.getDst(), l.getDstPort());
+//                switchPorts.addLast(npt);
+//                srcId = nexthoplinks.get(srcId).getDst();
+//            }
+//        }
         // else, no path exists, and path equals null
 
         Route result = null;

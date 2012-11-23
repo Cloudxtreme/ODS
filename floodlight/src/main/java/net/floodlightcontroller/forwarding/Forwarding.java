@@ -244,11 +244,25 @@ public class Forwarding extends ForwardingBase implements IFloodlightModule {
                     if (!srcDap.equals(dstDap) && 
                         (srcCluster != null) && 
                         (dstCluster != null)) {
-                        Route route = 
-                                routingEngine.getRoute(srcDap.getSwitchDPID(),
-                                                       (short)srcDap.getPort(),
-                                                       dstDap.getSwitchDPID(),
-                                                       (short)dstDap.getPort());
+                    	
+                    	
+                    	Route route = routingEngine.getRoute(srcDap.getSwitchDPID(),
+                                (short)srcDap.getPort(),
+                                dstDap.getSwitchDPID(),
+                                (short)dstDap.getPort());
+                    	if(match.getTransportSource() == Constants.BASE){
+                    		//Re-request route from routing engine but with weights this time
+                    		
+                    		
+                    		
+                    	} else if (match.getTransportSource() == Constants.ENHANCE1){
+                    		
+                    	} else if (match.getTransportSource() == Constants.ENHANCE2){
+                    		
+                    	} else if (match.getTransportSource() == Constants.ENHANCE3){
+                    		
+                    	}
+                    	
                         if (route != null) {
                             if (log.isTraceEnabled()) {
                                 log.trace("pushRoute match={} route={} " + 
