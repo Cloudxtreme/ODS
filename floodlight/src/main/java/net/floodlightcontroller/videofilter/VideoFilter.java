@@ -6,8 +6,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.floodlightcontroller.core.FloodlightContext;
 import net.floodlightcontroller.core.IFloodlightProviderService;
@@ -25,10 +28,15 @@ import net.floodlightcontroller.devicemanager.SwitchPort;
 import net.floodlightcontroller.packet.Ethernet;
 import net.floodlightcontroller.packet.IPv4;
 import net.floodlightcontroller.packet.TCP;
+import net.floodlightcontroller.routing.BroadcastTree;
 import net.floodlightcontroller.routing.IRoutingDecision;
+import net.floodlightcontroller.routing.Link;
 import net.floodlightcontroller.routing.Route;
+import net.floodlightcontroller.routing.RouteId;
+import net.floodlightcontroller.topology.Cluster;
 import net.floodlightcontroller.topology.ITopologyService;
 import net.floodlightcontroller.topology.NodePortTuple;
+import net.floodlightcontroller.topology.TopologyInstance;
 import net.floodlightcontroller.util.OFMessageDamper;
 
 import org.openflow.protocol.OFFlowMod;
@@ -109,7 +117,6 @@ public class VideoFilter implements IOFMessageListener, IFloodlightModule {
 	@Override
 	public void startUp(FloodlightModuleContext context) {
 		floodlightProvider.addOFMessageListener(OFType.PACKET_IN, this);
-		floodlightProvider.addOFMessageListener(OFType.STATS_REPLY, this);
 
 	}
 
@@ -136,6 +143,7 @@ public class VideoFilter implements IOFMessageListener, IFloodlightModule {
 
 					// TODO: Call doForwardFlow with the calculated weights
 					// change doForwardFlow args...
+					doForwardFlow(sw, pi, cntx);
 				}
 
 				// Get the TCP port of the packet
@@ -248,7 +256,12 @@ public class VideoFilter implements IOFMessageListener, IFloodlightModule {
 
 						// TODO: INSERT DIJKSTRA HERE FOR OUR VIDEO FLOWS
 						// AND CALCULATE FLOWS
-						Route route;
+						// Call getroute also with weights!!
+
+						Route route = getRoute(srcDap.getSwitchDPID(),
+								(short) srcDap.getPort(),
+								dstDap.getSwitchDPID(),
+								(short) dstDap.getPort());
 
 						if (route != null) {
 							if (log.isTraceEnabled()) {
@@ -350,7 +363,7 @@ public class VideoFilter implements IOFMessageListener, IFloodlightModule {
 				// for the
 				// source switch. The removal message is used to maintain the
 				// flow
-				// cache. Don't set the flag for ARP messages 
+				// cache. Don't set the flag for ARP messages
 				if ((requestFlowRemovedNotifn)
 						&& (match.getDataLayerType() != Ethernet.TYPE_ARP)) {
 					fm.setFlags(OFFlowMod.OFPFF_SEND_FLOW_REM);
@@ -536,4 +549,94 @@ public class VideoFilter implements IOFMessageListener, IFloodlightModule {
 			return d1ClusterId.compareTo(d2ClusterId);
 		}
 	};
+
+	public Route getRoute(long srcId, short srcPort, long dstId, short dstPort) {
+
+		// Return null the route source and desitnation are the
+		// same switchports.
+		if (srcId == dstId && srcPort == dstPort)
+			return null;
+
+		List<NodePortTuple> nptList;
+		NodePortTuple npt;
+		//TODO: Also pass weights here
+		Route r = getRoute(srcId, dstId);
+		if (r == null && srcId != dstId)
+			return null;
+
+		if (r != null) {
+			nptList = new ArrayList<NodePortTuple>(r.getPath());
+		} else {
+			nptList = new ArrayList<NodePortTuple>();
+		}
+		npt = new NodePortTuple(srcId, srcPort);
+		nptList.add(0, npt); // add src port to the front
+		npt = new NodePortTuple(dstId, dstPort);
+		nptList.add(npt); // add dst port to the end
+
+		RouteId id = new RouteId(srcId, dstId);
+		r = new Route(id, nptList);
+		return r;
+	}
+	
+    public Route getRoute(long srcId, long dstId) {
+        RouteId id = new RouteId(srcId, dstId);
+        Route result = null;    
+        //TODO: Also pass weights here
+        result = buildroute(id, srcId, dstId);
+        if (log.isTraceEnabled()) {
+            log.trace("getRoute: {} -> {}", id, result);
+        }
+        return result;
+    }
+    
+    
+    protected Route buildroute(RouteId id, long srcId, long dstId) {
+    	
+    	Map<Long, BroadcastTree> destinationRootedTrees = new HashMap<Long, BroadcastTree>();
+    	Map<Link, Integer> linkCost = new HashMap<Link, Integer>();
+    	Set<Cluster> clusters = topology
+    	
+    	
+    	
+    	for(Cluster c: clusters) {
+            for (Long node : c.links.keySet()) {
+                BroadcastTree tree = dijkstra(c, node, linkCost, true);
+                destinationRootedTrees.put(node, tree);
+            }
+        }
+    	
+    	
+        NodePortTuple npt;
+
+        LinkedList<NodePortTuple> switchPorts =
+                new LinkedList<NodePortTuple>();
+
+        if (destinationRootedTrees.get(dstId) == null) return null;
+
+        Map<Long, Link> nexthoplinks =
+                destinationRootedTrees.get(dstId).getLinks();
+
+        if ((nexthoplinks!=null) && (nexthoplinks.get(srcId)!=null)) {
+            while (srcId != dstId) {
+                Link l = nexthoplinks.get(srcId);
+
+                npt = new NodePortTuple(l.getSrc(), l.getSrcPort());
+                switchPorts.addLast(npt);
+                npt = new NodePortTuple(l.getDst(), l.getDstPort());
+                switchPorts.addLast(npt);
+                srcId = nexthoplinks.get(srcId).getDst();
+            }
+        }
+        // else, no path exists, and path equals null
+
+        Route result = null;
+        if (switchPorts != null && !switchPorts.isEmpty()) 
+            result = new Route(id, switchPorts);
+        if (log.isTraceEnabled()) {
+            log.trace("buildroute: {}", result);
+        }
+        return result;
+    }
+    
 }
