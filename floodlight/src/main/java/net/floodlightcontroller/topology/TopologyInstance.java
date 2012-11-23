@@ -652,14 +652,21 @@ public class TopologyInstance {
 
 			if (tcpport == 8080) {
 				for (NodePortTuple nt : tunnelPorts) {
-					if (switchPortLinks.get(npt) == null)
+					if (switchPortLinks.get(nt) == null)
 						continue;
-					for (Link link : switchPortLinks.get(npt)) {
+					for (Link link : switchPortLinks.get(nt)) {
 						if (link == null)
 							continue;
 						
 						//Here you have the link, now add a weight
+						long src = link.getSrc();
+						long dst = link.getDst();
 						
+						long srcLoad = load.get(src);
+						long dstLoad = load.get(dst);
+						
+						//SAFE?
+						int weight = (int) (srcLoad + dstLoad);
 						
 						linkCost.put(link, weight);
 					}
