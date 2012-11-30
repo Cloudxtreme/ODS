@@ -670,11 +670,68 @@ public class TopologyInstance {
 					}
 				}
 			} else if (tcpport == 8081) {
-
+				for (NodePortTuple nt : tunnelPorts) {
+					if (switchPortLinks.get(nt) == null)
+						continue;
+					for (Link link : switchPortLinks.get(nt)) {
+						if (link == null)
+							continue;
+						
+						//Here you have the link, now add a weight
+						long src = link.getSrc();
+						long dst = link.getDst();
+						
+						long srcLoad = load.get(src);
+						long dstLoad = load.get(dst);
+						
+						//SAFE?
+						int weight = (int) (srcLoad + dstLoad);
+						
+						linkCost.put(link, weight);
+					}
+				}
 			} else if (tcpport == 8082) {
-
+				for (NodePortTuple nt : tunnelPorts) {
+					if (switchPortLinks.get(nt) == null)
+						continue;
+					for (Link link : switchPortLinks.get(nt)) {
+						if (link == null)
+							continue;
+						
+						//Here you have the link, now add a weight
+						long src = link.getSrc();
+						long dst = link.getDst();
+						
+						long srcLoad = load.get(src);
+						long dstLoad = load.get(dst);
+						
+						//SAFE?
+						int weight = (int) (srcLoad + dstLoad);
+						
+						linkCost.put(link, weight);
+					}
+				}
 			} else if (tcpport == 8083) {
-
+				for (NodePortTuple nt : tunnelPorts) {
+					if (switchPortLinks.get(nt) == null)
+						continue;
+					for (Link link : switchPortLinks.get(nt)) {
+						if (link == null)
+							continue;
+						
+						//Here you have the link, now add a weight
+						long src = link.getSrc();
+						long dst = link.getDst();
+						
+						long srcLoad = load.get(src);
+						long dstLoad = load.get(dst);
+						
+						//SAFE?
+						int weight = (int) (srcLoad + dstLoad);
+						
+						linkCost.put(link, weight);
+					}
+				}
 			}
 
 			// Re-call calculateShortestPathTreeInCluster with link weights
