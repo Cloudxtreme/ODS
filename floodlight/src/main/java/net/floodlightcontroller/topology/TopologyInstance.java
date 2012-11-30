@@ -655,17 +655,17 @@ public class TopologyInstance {
 					for (Link link : switchPortLinks.get(nt)) {
 						if (link == null)
 							continue;
-						
-						//Here you have the link, now add a weight
+
+						// Here you have the link, now add a weight
 						long src = link.getSrc();
 						long dst = link.getDst();
-						
+
 						long srcLoad = load.get(src);
 						long dstLoad = load.get(dst);
-						
-						//SAFE?
+
+						// SAFE?
 						int weight = (int) (srcLoad + dstLoad);
-						
+
 						linkCost.put(link, weight);
 					}
 				}
@@ -676,17 +676,17 @@ public class TopologyInstance {
 					for (Link link : switchPortLinks.get(nt)) {
 						if (link == null)
 							continue;
-						
-						//Here you have the link, now add a weight
+
+						// Here you have the link, now add a weight
 						long src = link.getSrc();
 						long dst = link.getDst();
-						
+
 						long srcLoad = load.get(src);
 						long dstLoad = load.get(dst);
-						
-						//SAFE?
+
+						// SAFE?
 						int weight = (int) (srcLoad + dstLoad);
-						
+
 						linkCost.put(link, weight);
 					}
 				}
@@ -697,17 +697,17 @@ public class TopologyInstance {
 					for (Link link : switchPortLinks.get(nt)) {
 						if (link == null)
 							continue;
-						
-						//Here you have the link, now add a weight
+
+						// Here you have the link, now add a weight
 						long src = link.getSrc();
 						long dst = link.getDst();
-						
+
 						long srcLoad = load.get(src);
 						long dstLoad = load.get(dst);
-						
-						//SAFE?
+
+						// SAFE?
 						int weight = (int) (srcLoad + dstLoad);
-						
+
 						linkCost.put(link, weight);
 					}
 				}
@@ -718,17 +718,17 @@ public class TopologyInstance {
 					for (Link link : switchPortLinks.get(nt)) {
 						if (link == null)
 							continue;
-						
-						//Here you have the link, now add a weight
+
+						// Here you have the link, now add a weight
 						long src = link.getSrc();
 						long dst = link.getDst();
-						
+
 						long srcLoad = load.get(src);
 						long dstLoad = load.get(dst);
-						
-						//SAFE?
+
+						// SAFE?
 						int weight = (int) (srcLoad + dstLoad);
-						
+
 						linkCost.put(link, weight);
 					}
 				}
