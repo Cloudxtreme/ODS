@@ -103,7 +103,7 @@ public class NetworkStatistics extends TimerTask {
 		    	}				    	
 		    	
 		    	currentLoad.put(sw, newload / (period / 1000));
-		    	//System.out.println("Load for switch: " + transmittedBytes.get(sw) + " bytes/second");
+		    	//System.out.println("Load for switch: " + currentLoad.get(sw) + " bytes/second");
 		    }
 		}
 	}
@@ -115,6 +115,7 @@ public class NetworkStatistics extends TimerTask {
 	public static synchronized Map<IOFSwitch, Long> networkLoad(){
 		//return the whole map with loads
 		if(!currentLoad.isEmpty()){
+			//System.out.println("Loads in map:" + currentLoad.size());
 			return currentLoad;
 		} else {
 			return null;
@@ -129,7 +130,8 @@ public class NetworkStatistics extends TimerTask {
 	public static synchronized Long switchLoad(IOFSwitch sw){	
 		//lookup the load in the map
 		if(currentLoad != null && currentLoad.containsKey(sw)){
-			return loadHistory.get(sw);
+			//System.out.println("Load for: " + sw + " is: " + loadHistory.get(sw));
+			return currentLoad.get(sw);
 		} else {
 			return null;
 		}
