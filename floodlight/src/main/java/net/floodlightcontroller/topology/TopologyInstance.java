@@ -664,7 +664,7 @@ public class TopologyInstance {
 						long dstLoad = load.get(dst);
 
 						// SAFE?
-						int weight = (int) (srcLoad + dstLoad);
+						int weight = (int) (srcLoad + dstLoad) + 1;
 
 						linkCost.put(link, weight);
 					}
@@ -685,7 +685,7 @@ public class TopologyInstance {
 						long dstLoad = load.get(dst);
 
 						// SAFE?
-						int weight = (int) (srcLoad + dstLoad);
+						int weight = (int) (srcLoad + dstLoad) + 1;
 
 						linkCost.put(link, weight);
 					}
@@ -706,7 +706,7 @@ public class TopologyInstance {
 						long dstLoad = load.get(dst);
 
 						// SAFE?
-						int weight = (int) (srcLoad + dstLoad);
+						int weight = (int) (srcLoad + dstLoad) +1;
 
 						linkCost.put(link, weight);
 					}
@@ -727,7 +727,7 @@ public class TopologyInstance {
 						long dstLoad = load.get(dst);
 
 						// SAFE?
-						int weight = (int) (srcLoad + dstLoad);
+						int weight = (int) (srcLoad + dstLoad) +1;
 
 						linkCost.put(link, weight);
 					}
