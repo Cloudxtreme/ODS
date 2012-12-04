@@ -645,7 +645,8 @@ public class TopologyInstance {
 
 		if (tcpport != 0) {
 			// TODO: Construct a map with link weights
-			Map<IOFSwitch, Long> load = NetworkStatistics.networkLoad();
+			//indexen via switch ID
+			Map<Long, Long> load = NetworkStatistics.networkLoad();
 			Map<Link, Integer> linkCost = new HashMap<Link, Integer>();
 
 			if (tcpport == 8080) {
