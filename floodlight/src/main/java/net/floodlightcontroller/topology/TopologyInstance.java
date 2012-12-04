@@ -18,6 +18,7 @@ import net.floodlightcontroller.core.IOFSwitch;
 import net.floodlightcontroller.core.NetworkStatistics;
 import net.floodlightcontroller.core.annotations.LogMessageCategory;
 import net.floodlightcontroller.core.annotations.LogMessageDoc;
+import net.floodlightcontroller.devicemanager.SwitchPort;
 import net.floodlightcontroller.routing.BroadcastTree;
 import net.floodlightcontroller.routing.Link;
 import net.floodlightcontroller.routing.Route;
@@ -643,7 +644,7 @@ public class TopologyInstance {
 
 		LinkedList<NodePortTuple> switchPorts = new LinkedList<NodePortTuple>();
 
-		if (tcpport != 0) {
+	//	if (tcpport != 0) {
 			// TODO: Construct a map with link weights
 			//indexen via switch ID
 			Map<Long, Long> load = NetworkStatistics.networkLoad();
@@ -712,11 +713,12 @@ public class TopologyInstance {
 						linkCost.put(link, weight);
 					}
 				}
-			} else if (tcpport == 8083) {
-				for (NodePortTuple nt : tunnelPorts) {
-					if (switchPortLinks.get(nt) == null)
-						continue;
-					for (Link link : switchPortLinks.get(nt)) {
+			//} else if (tcpport == 8083) {
+			} else { 
+				
+				
+				for (Set<Link> linkset: switchPortLinks.values()) {
+					for (Link link : linkset) {
 						if (link == null)
 							continue;
 
@@ -729,7 +731,8 @@ public class TopologyInstance {
 
 						// SAFE?
 						int weight = (int) (srcLoad + dstLoad) +1;
-
+						log.debug("{}  {}",src,dst);
+						log.debug("{} \n",weight);
 						linkCost.put(link, weight);
 					}
 				}
@@ -737,7 +740,7 @@ public class TopologyInstance {
 
 			// Re-call calculateShortestPathTreeInCluster with link weights
 			calculateShortestPathTreeInClusters(linkCost);
-		}
+	//	}
 		if (destinationRootedTrees == null)
 			return null;
 		if (destinationRootedTrees.get(dstId) == null)
@@ -774,7 +777,21 @@ public class TopologyInstance {
 		if (log.isTraceEnabled()) {
 			log.trace("buildroute: {}", result);
 		}
+		
+		for (NodePortTuple nt : result.getPath()) {
+			if (switchPortLinks.get(nt) == null)
+				continue;
+			for (Link link : switchPortLinks.get(nt)) {
+				if (link == null)
+					continue;
 
+				// Here you have the link, now add a weight
+				long src = link.getSrc();
+				long dst = link.getDst();
+
+				log.debug("path: {} -> {}",src,dst);
+			}
+		}
 		calculateShortestPathTreeInClusters();
 
 		return result;
