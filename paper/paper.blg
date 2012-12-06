@@ -1,57 +1,51 @@
 This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
 The top-level auxiliary file: paper.aux
-I couldn't open style file IEEEtran.bst
----line 7 of file paper.aux
- : \bibstyle{IEEEtran
- :                   }
-I'm skipping whatever remains of this command
-I couldn't open database file IEEEabrv.bib
----line 8 of file paper.aux
- : \bibdata{IEEEabrv
- :                  ,IEEEexample}
-I'm skipping whatever remains of this command
-I found no \citation commands---while reading file paper.aux
-I found no database files---while reading file paper.aux
-I found no style file---while reading file paper.aux
-You've used 0 entries,
-            0 wiz_defined-function locations,
-            85 strings with 500 characters,
-and the built_in function-call counts, 0 in all, are:
-= -- 0
-> -- 0
-< -- 0
-+ -- 0
-- -- 0
-* -- 0
-:= -- 0
-add.period$ -- 0
-call.type$ -- 0
-change.case$ -- 0
-chr.to.int$ -- 0
-cite$ -- 0
-duplicate$ -- 0
-empty$ -- 0
-format.name$ -- 0
-if$ -- 0
+The style file: IEEEtran.bst
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Database file #1: paper.bib
+-- IEEEtran.bst version 1.12 (2007/01/11) by Michael Shell.
+-- http://www.michaelshell.org/tex/ieeetran/bibtex/
+-- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+
+Done.
+You've used 8 entries,
+            4024 wiz_defined-function locations,
+            855 strings with 8795 characters,
+and the built_in function-call counts, 6329 in all, are:
+= -- 473
+> -- 180
+< -- 49
++ -- 97
+- -- 33
+* -- 319
+:= -- 914
+add.period$ -- 19
+call.type$ -- 8
+change.case$ -- 8
+chr.to.int$ -- 120
+cite$ -- 8
+duplicate$ -- 441
+empty$ -- 518
+format.name$ -- 40
+if$ -- 1444
 int.to.chr$ -- 0
-int.to.str$ -- 0
-missing$ -- 0
-newline$ -- 0
-num.names$ -- 0
-pop$ -- 0
-preamble$ -- 0
+int.to.str$ -- 8
+missing$ -- 86
+newline$ -- 53
+num.names$ -- 7
+pop$ -- 228
+preamble$ -- 1
 purify$ -- 0
-quote$ -- 0
-skip$ -- 0
+quote$ -- 2
+skip$ -- 466
 stack$ -- 0
-substring$ -- 0
-swap$ -- 0
-text.length$ -- 0
+substring$ -- 288
+swap$ -- 361
+text.length$ -- 9
 text.prefix$ -- 0
-top$ -- 0
-type$ -- 0
+top$ -- 5
+type$ -- 8
 warning$ -- 0
-while$ -- 0
-width$ -- 0
-write$ -- 0
-(There were 5 error messages)
+while$ -- 27
+width$ -- 9
+write$ -- 100

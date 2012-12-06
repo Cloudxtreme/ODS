@@ -1,0 +1,26 @@
+@misc{diffserv,
+      author = "S. Blake and D. Black and M. Carlson and E. Davies and Z. Wang and  W. Weiss",
+      title = "An Architecture for Differentiated Services",
+      month = "December",
+      year = "1998",
+      url = "http://www.ietf.org/rfc/rfc2475.txt"
+}
+
+@misc{intserv,
+      author = "R. Braden and D. Clark and S. Shenker",
+      title = "Integrated Services in the Internet Architecture: an Overview",
+      month = "June",
+      year = "1994",
+      url = "http://tools.ietf.org/html/rfc1633"
+}
+
+@article{mckeown2008openflow,
+  title={OpenFlow: enabling innovation in campus networks},
+  author={McKeown, N. and Anderson, T. and Balakrishnan, H. and Parulkar, G. and Peterson, L. and Rexford, J. and Shenker, S. and Turner, J.},
+  journal={ACM SIGCOMM Computer Communication Review},
+  volume={38},
+  number={2},
+  pages={69--74},
+  year={2008},
+  publisher={ACM}
+}

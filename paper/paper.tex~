@@ -352,7 +352,7 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Layer based routing to obtain quality optimization of scalable video streaming in the Future Internet}
+\title{Layer based routing to obtain quality optimization of video streaming in the Future Internet}
 
 
 % author names and affiliations
@@ -404,9 +404,9 @@ In TCP/IP networks, there is no inherent support for Quality of Service.
 Routing is done on the minimum hop count from sender to receiver, and all traffic is best-effort traffic. 
 This is unsatisfactory for applications such as video streaming. 
 This paper presents an OpenFlow controller application which provides 
-Quality of Service (\textit{QoS}) support for Scalable Video Streaming (\textit{SVC}) in an OpenFlow network. 
+Quality of Service (\textit{QoS}) support for video streaming using Scalable Video Coding (\textit{SVC}) in an OpenFlow network. 
 First we route the base layer of SVC encoded videos as a 
-high priority QoS flow while the enhancement layers are routed at a lower QoS or as a best effort flow. 
+high priority QoS flow while the enhancement layers are routed at a lower QoS or as a best-effort flow. 
 Second, we provide failure recovery so the OpenFlow network can converge back to an optimal 
 state when links fail. We show that using different costs to calculate paths for different flows 
 can improve the overall throughput of video streams when network congestion and delay occur.
@@ -439,22 +439,24 @@ can improve the overall throughput of video streams when network congestion and 
 In a TCP/IP-based network, each router or switch contains a flow table containing the 
 next hop for each destination, based on the shortest path calculation. 
 Media applications, such as video streaming, 
-require no packet loss and minimal network delay due to their high Quality of Service (QoS) dependency. 
-When these QoS flows are sent over the same path as other best effort traffic they 
+require no packet loss and minimal network delay. 
+When these video flows are sent over the same path as other best effort traffic they 
 are subject to network congestion and delay which renders an unsatisfactory outcome. 
-Several efforts have been made to support QoS in a TCP/IP-based network, such as DiffServ and IntServ, but these 
+Several efforts have been made to give precedence to certain types of traffic, defined as Quality of Service (QoS).
+There are solutions available for QoS support in a TCP/IP-based network, 
+such as DiffServ \cite{diffserv} and IntServ \cite{intserv}, but these 
 solutions only work well in managed networks.
-Scalable Video Coding (SVC) encodes the stream in a base layer along with several enhancement layers. 
-In order to obtain correct output it is important that the base layer has no 
+Scalable Video Coding (SVC) \cite{schwarz2007overview} encodes the stream in a base layer along with several enhancement layers. 
+In order to obtain qualitative video streams, it is important that the base layer has no 
 packet loss and minimal delay, which is not possible without support for QoS. 
 To solve this issue we need the routing algorithms to detect QoS flows and route these flows differently than 
 normal best effort traffic.
 To achieve this goal in video streaming, we route the base layer of SVC encoded video at a high QoS 
 while the enhancement layers are routed either at a lower QoS or as a best effort flow. 
 We also provide failure recovery so the network 
-can converge back to an optimal state when links go down.\\
+can converge back to an optimal state when links fail.\\
 
-We use OpenFlow in order to provide QoS support for scalable video streaming. 
+We use OpenFlow \cite{mckeown2008openflow} in order to provide QoS support for scalable video streaming. 
 OpenFlow is a protocol for switches, allowing to control the packet forwarding process.
 This way, networks are not only configurable, but also programmable.
 Each OpenFlow Switch has a flow table, which is used for packet lookup and 
@@ -468,7 +470,7 @@ The controller installs new entries in the flow table to manage the network traf
 Entries have a hard and a soft timeout. A soft timeout means the entry gets removed if it has not been used for a certain time.
 A hard timeout means the flow will be removed after the timeout, even if it is still in use.
 There are many implementations of controllers available for OpenFlow switches.
-The implementation of the controller we will use is Floodlight, because it is open source and widely used.
+The implementation of the controller we will use is Floodlight \cite{floodlight}, because it is open source and widely used.
 
 \begin{table}[htb]
 \centering
@@ -500,26 +502,28 @@ In Section VII we come to a conclusion.
 
 \section{Related work}
 In our research we identified a need for separate forwarding actions per flow.
-The same principal has been discussed in research papers from Princeton University. 
-In their research the aim was to apply load-balancing during service discovery of web services 
-when all requests had to be processed by a central component. 
+Wang, R. et al. \cite{wang2011openflow} follow the same principal.
+The aim was to apply load-balancing during service discovery of web services 
+when all requests had to be processed by a central component.
 A problem occurs when each request is forwarded to a centralized component responsible 
 for service discovery, which leads to network congestion. By using OpenFlow, the researchers at 
 Princeton University managed to set separate forwarding actions for client requests which match 
 certain criteria. These actions allow forwarding entities to redirect client requests to an 
 appropriate service instance without interference from the centralized component. Even though 
 the use case may be different, the principal is the same as the one applied in our research. 
-When both best effort and QoS flows follow the same paths, chances for congestion and packet loss 
-to occur increase significantly. OpenFlow allows us to set different paths for both flows, which 
+When both best effort and QoS flows follow the same path, chances of congestion and packet loss 
+occurring increase significantly. OpenFlow allows us to set different paths for both flows, which 
 improves the throughput of our QoS flows and also decrease the network load on links used by best 
 effort traffic.\\
 
 The idea to provide a minimal quality for SVC encoded videos originates from 
-research described in [4] and [5]. By routing the base layer as a lossless-QoS flow we can 
+research described in \cite{egilmez2011scalable} and \cite{civanlar2010qos}. 
+By routing the base layer as a lossless-QoS flow we can 
 guarantee a minimal quality to the user. Ideally, the enhancement layers will also be delivered 
 without packet loss or delay but when congestion occurs we demote the enhancement layers to best 
-effort traffic and prioritize the base layer. Research discussed in [4] also attempts to route 
-the enhancement layers as a lossy-QoS flow. Our research goes further and also enables fast failure 
+effort traffic and prioritize the base layer. Research discussed in \cite{egilmez2011scalable} 
+also attempts to route the enhancement layers as a lossy-QoS flow. 
+Our research goes further and also enables fast failure 
 recovery when a link fails.\\
 
 \section{Architecture}
@@ -532,12 +536,12 @@ These principals are shown in Figure \ref{fig_sim}. A filter on the controller s
 other traffic, after which the controller can choose a path for the different layers. 
 When the controller calculates a path for a layer, the new forwarding rules are sent to the switches.\\
 
-\begin{figure*}[htb]
+\begin{figure}[htb]
 \centering
 \includegraphics[width=\linewidth]{fig/SVC_OpenFlow_flow}
 \caption{Simulation Results}
 \label{fig_sim}
-\end{figure*}
+\end{figure}
 
 We defined a cost function which can be used to calculate the cost of a path.
 The cost function is based on the following observations. (Insert ref here)
@@ -713,7 +717,7 @@ The conclusion goes here.
 % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
 \bibliographystyle{IEEEtran}
-\bibliography{IEEEabrv,IEEEexample}
+\bibliography{paper}
 
 
 

@@ -1,0 +1,7 @@
+@misc{diffserv,
+      author = "S. Blake and D. Black and M. Carlson and E. Davies and Z. Wang and  W. Weiss",
+      title = "An Architecture for Differentiated Services",
+      month = "December",
+      year = "1998",
+      url = "http://www.ietf.org/rfc/rfc2475.txt"
+}
