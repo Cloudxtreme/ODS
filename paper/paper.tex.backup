@@ -407,7 +407,7 @@ This paper presents an OpenFlow controller application which provides
 Quality of Service (\textit{QoS}) support for video streaming using Scalable Video Coding (\textit{SVC}) in an OpenFlow network. 
 First we route the base layer of SVC encoded videos as a 
 high priority QoS flow while the enhancement layers are routed at a lower QoS or as a best-effort flow. 
-Second, we provide failure recovery so the OpenFlow network can converge back to an optimal 
+Secondly, we provide failure recovery so the OpenFlow network can converge back to an optimal 
 state when links fail. We show that using different costs to calculate paths for different flows 
 can improve the overall throughput of video streams when network congestion and delay occur.
 \end{abstract}
@@ -439,24 +439,22 @@ can improve the overall throughput of video streams when network congestion and 
 In a TCP/IP-based network, each router or switch contains a flow table containing the 
 next hop for each destination, based on the shortest path calculation. 
 Media applications, such as video streaming, 
-require no packet loss and minimal network delay. 
+require minimal packet loss and minimal network delay. 
 When these video flows are sent over the same path as other best effort traffic they 
 are subject to network congestion and delay which renders an unsatisfactory outcome. 
 Several efforts have been made to give precedence to certain types of traffic, defined as Quality of Service (QoS).
 There are solutions available for QoS support in a TCP/IP-based network, 
 such as DiffServ \cite{diffserv} and IntServ \cite{intserv}, but these 
 solutions only work well in managed networks.
+Tunneling with MPLS offers a partial solution, but it lacks real-time reconfigurability and adaptivity. \cite{mpls}\\
+
 Scalable Video Coding (SVC) \cite{schwarz2007overview} encodes the stream in a base layer along with several enhancement layers. 
 In order to obtain qualitative video streams, it is important that the base layer has no 
-packet loss and minimal delay, which is not possible without support for QoS. 
-To solve this issue we need the routing algorithms to detect QoS flows and route these flows differently than 
-normal best effort traffic.
-To achieve this goal in video streaming, we route the base layer of SVC encoded video at a high QoS 
-while the enhancement layers are routed either at a lower QoS or as a best effort flow. 
-We also provide failure recovery so the network 
-can converge back to an optimal state when links fail.\\
+packet loss and minimal delay, which is hard to accomplish without support for QoS. 
+To solve this issue we need to differentiate between the different flows and route these flows 
+differently than normal best effort traffic.\\
 
-We use OpenFlow \cite{mckeown2008openflow} in order to provide QoS support for scalable video streaming. 
+We use OpenFlow \cite{mckeown2008openflow} in order to provide QoS support. 
 OpenFlow is a protocol for switches, allowing to control the packet forwarding process.
 This way, networks are not only configurable, but also programmable.
 Each OpenFlow Switch has a flow table, which is used for packet lookup and 
@@ -494,44 +492,33 @@ IP ToS Bits & TCP/UDP Source Port & TCP/UDP Destination Port\\ \hline
 
 The rest of this paper is organized as follows.
 In Section II of this paper we compare related work to our own. 
-In section III we take a closer look at the components of our framework 
-and the principals it is based on. In section IV we present the different algorithms 
-used to determine the behavior of each flow in the network. Section V shows the test 
-scenario we used to evaluate our framework while Section VI presents results.
-In Section VII we come to a conclusion.
+In section III we take a closer look at the design considerations for 
+developing an OpenFlow controller application that provides layer-based quality optimization. 
+In section IV we present the general architecture. Section V shows experimental results.
+In Section VI we come to a conclusion.
 
 \section{Related work}
 In our research we identified a need for separate forwarding actions per flow.
-In \cite{wang2011openflow} the aim was to apply load-balancing during service discovery of web services 
+Wang, R. et al. \cite{wang2011openflow} follow the same principal.
+The aim was to apply load-balancing during service discovery of web services 
 when all requests had to be processed by a central component.
 A problem occurs when each request is forwarded to a centralized component responsible 
-for service discovery, which leads to network congestion. By using OpenFlow, the researchers at 
-Princeton University managed to set separate forwarding actions for client requests which match 
+for service discovery, which leads to network congestion. 
+By using OpenFlow they managed to set separate forwarding actions for client requests which match 
 certain criteria. These actions allow forwarding entities to redirect client requests to an 
 appropriate service instance without interference from the centralized component. Even though 
 the use case may be different, the principal is the same as the one applied in our research. 
-When both best effort and QoS flows follow the same paths, chances for congestion and packet loss 
-to occur increase significantly. OpenFlow allows us to set different paths for both flows, which 
+When all traffic follows the same path, chances of congestion and packet loss 
+occurring increase significantly. OpenFlow allows us to set up different paths for different flows, which 
 improves the throughput of our QoS flows and also decrease the network load on links used by best 
 effort traffic.\\
 
 The idea to provide a minimal quality for SVC encoded videos originates from 
-research described in [4] and [5]. By routing the base layer as a lossless-QoS flow we can 
+research described in \cite{egilmez2011scalable} and \cite{civanlar2010qos}. 
+By routing the base layer as a lossless QoS flow, which means there is no packet loss, they can 
 guarantee a minimal quality to the user. Ideally, the enhancement layers will also be delivered 
-without packet loss or delay but when congestion occurs we demote the enhancement layers to best 
-effort traffic and prioritize the base layer. Research discussed in [4] also attempts to route 
-the enhancement layers as a lossy-QoS flow. Our research goes further and also enables fast failure 
-recovery when a link fails.\\
-
-\section{Architecture}
-Each OpenFlow network contains at least one controller which is responsible for managing all the switches. 
-A default OpenFlow switch forwards packets 
-to the controller if the packet does not match any forwarding entry. 
-We route SVC encoded video streams as a QoS flow, where we consider the base layer as a 
-high priority QoS flow and the enhancement layer as either a lower QoS flow or as best effort traffic. 
-These principals are shown in Figure \ref{fig_sim}. A filter on the controller separates QoS flows from 
-other traffic, after which the controller can choose a path for the different layers. 
-When the controller calculates a path for a layer, the new forwarding rules are sent to the switches.\\
+without packet loss or delay but when congestion occurs they demote the enhancement layers to best 
+effort traffic and prioritize the base layer.\\
 
 \begin{figure}[htb]
 \centering
@@ -540,8 +527,16 @@ When the controller calculates a path for a layer, the new forwarding rules are 
 \label{fig_sim}
 \end{figure}
 
-We defined a cost function which can be used to calculate the cost of a path.
-The cost function is based on the following observations. (Insert ref here)
+In our own research we define the base layer as lossless QoS traffic, which means no packet loss is allowed.
+The enhancement layers are lossy QoS traffic, which means they may still follow a different 
+route than best-effort traffic, but some packet loss is allowed.
+These principals are shown in Figure \ref{fig_sim}.
+We also enable fast failure recovery when a link fails, as described in \cite{sharma2011enabling}.
+Also, we present experimental results, whereas other research only presents simulations.\\
+
+\section{Design considerations}
+
+In designing the OpenFlow application, we considered the following.
 \begin{itemize}
 	\item When high priority QoS flows are forwarded on the same link as best effort traffic, there will be packet loss in the best effort flow to prioritize the QoS flow.
 	\item Metrics for QoS flows must be different than those used for best effort traffic. The shortest path and QoS path must be different to obtain good results. 
@@ -551,24 +546,47 @@ The cost function is based on the following observations. (Insert ref here)
 	\item Best effort traffic can be used as a reference to retrieve metrics from a switch or link, such as packet loss or to estimate the amount of traffic on that route.
 \end{itemize}
 
-These observations show that packet loss and path length are part of our cost function: 
-the cost function must find a balance between maintaining low packet loss of the best effort 
+These observations show that packet loss and path length are important in defining algorithms: 
+the algorithm must find a balance between maintaining low packet loss of the best effort 
 traffic and the delay of QoS flows, caused by using longer paths.\\
 
-Furthermore, the controller 
-must be able to obtain these metrics at any time from any switch in the network before calculating 
+\section{Architecture}
+
+To obtain the different scalable vector encoded video streams, we use HTTP adaptive streaming.
+This means that 
+
+Each OpenFlow network contains at least one controller which is responsible for managing all the switches. 
+An OpenFlow switch forwards packets 
+to the controller if the packet does not match any forwarding entry. 
+A filter on the controller separates QoS flows from 
+other traffic, based on the TCP port, after which the controller can choose a path for the different layers. 
+When the controller calculates a path for a layer, the new forwarding rules are sent to the switches.\\
+
+The different paths are calculated using Dijkstra. 
+Depending on the current load of the network, a cost is given to each link.
+The controller must be able to obtain the load any time from any switch in the network before calculating 
 new flow tables. We implemented a monitor module on the controller to gather all network 
-statistics. Besides polling for statistics, a switch must also forward events to the controller when 
-they occur, such as an link going down or a flow experiencing packet loss. These events provide 
-additional monitoring data for the routing algorithms on the controller.\\
+statistics. Besides polling for statistics, a switch also forwards events to the controller when 
+they occur, such as a link failure. These events are also act upon by the controller, 
+by recalculating a different path for every flow.\\
 
-\section{QoS Routing}
-Must ensure zero packet loss base layer, optimize other traffic ... cost function?
-Go from theoretical cost function to exact function in code?
---> Yes
+\section{Experimental results}
 
+All of the experiments are performed on the iLab.t Virtual Wall at iMinds.
+The Virtual Wall is derived from Emulab, developed at Utah university.
+The Virtual Wall facility is a generic test environment for advanced network, 
+distributed software and service evaluation, and supports scalability research.\\
 
-\section{Evaluation}
+The Virtual Wall facilities consist of 100 nodes 
+(dual processor, dual core servers, 4x1 or 6x1 Gb/s interfaces per node)
+interconnected via a non-blocking 1.5 Tb/s VLAN Ethernet switch enabling flexible creation of experiment topologies, 
+and a display wall (20 monitors) for experiment visualization. 
+Each server is connected with 4 or 6 gigabit Ethernet links to the switch. 
+The Virtual Wall nodes can be assigned different functionalities ranging 
+from terminal, server, network node, and impairment node. 
+Each node is fully dedicated and under full control of one experiment, 
+so the users can test all kind of operating system images and configurations \cite{virtual}.\\
+
 Test scenario (client/server - filter based on port) + metrics for result + present results\\
 An evaluation metric has to represent a value which is relevant to what we want to improve, which is why a measurement must:
 \begin{itemize}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.8.1)  6 DEC 2012 13:40
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.8.1)  6 DEC 2012 17:21
 entering extended mode
  %&-line parsing enabled.
 **paper.tex
@@ -143,48 +143,43 @@ LaTeX Font Info:    ... okay on input line 351.
 \MPnumerator=\count96
 \everyMPtoPDFconversion=\toks17
 )
-Underfull \hbox (badness 10000) in paragraph at lines 439--458
+Underfull \hbox (badness 10000) in paragraph at lines 439--450
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 451--456
 
  []
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 477.
+(Font)              <8> on input line 475.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 477.
+(Font)              <6> on input line 475.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 477.
+(Font)              <5> on input line 475.
 
-Overfull \hbox (6.6462pt too wide) in paragraph at lines 477--484
+Overfull \hbox (6.6462pt too wide) in paragraph at lines 475--482
  [][] 
  []
 
 <fig/openflow1.png, id=1, 435.74559pt x 232.39764pt>
 File: fig/openflow1.png Graphic file (type png)
  <use fig/openflow1.png>
-Overfull \hbox (9.44937pt too wide) in paragraph at lines 490--491
+Overfull \hbox (9.44937pt too wide) in paragraph at lines 488--489
  [][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 502--516
+
  []
 
 [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
  <./fig/openflow1.png (PNG copy)>]
-Underfull \hbox (badness 10000) in paragraph at lines 504--518
-
- []
-
-
-Underfull \hbox (badness 1946) in paragraph at lines 519--528
-\OT1/ptm/m/n/10 By rout-ing the base layer as a lossless-QoS flow we
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 519--528
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 530--538
+Underfull \hbox (badness 10000) in paragraph at lines 517--523
 
  []
 
@@ -192,19 +187,56 @@ Underfull \hbox (badness 10000) in paragraph at lines 530--538
 File: fig/SVC_OpenFlow_flow.png Graphic file (type png)
 
 <use fig/SVC_OpenFlow_flow.png>
+Underfull \hbox (badness 10000) in paragraph at lines 531--537
+
+ []
+
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 549.
+(Font)              <7> on input line 542.
 
-Underfull \hbox (badness 10000) in paragraph at lines 557--560
+Underfull \vbox (badness 2134) has occurred while \output is active []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 550--553
+
+ []
+
+
+Underfull \hbox (badness 1454) in paragraph at lines 556--563
+\OT1/ptm/m/n/10 lay-ers (base and en-hance-ment lay-ers). These lay-ers are
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 556--563
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 561--567
+Underfull \hbox (badness 10000) in paragraph at lines 564--571
 
  []
 
-[2 <./fig/SVC_OpenFlow_flow.png (PNG copy)>] (./paper.bbl)
+
+Underfull \hbox (badness 10000) in paragraph at lines 572--579
+
+ []
+
+[2 <./fig/SVC_OpenFlow_flow.png (PNG copy)>]
+Underfull \hbox (badness 10000) in paragraph at lines 588--592
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 593--602
+
+ []
+
+(./paper.bbl
+Underfull \hbox (badness 3838) in paragraph at lines 88--91
+[]\OT1/ptm/m/n/8 ``ilab.t vir-tual wall,'' 2012. [On-line]. Avail-able:
+ []
+
+)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -216,23 +248,21 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[3
-
-] (./paper.aux) ) 
+[3] (./paper.aux) ) 
 Here is how much of TeX's memory you used:
- 1625 strings out of 495061
- 25157 string characters out of 1182622
- 80447 words of memory out of 3000000
- 4832 multiletter control sequences out of 15000+50000
+ 1628 strings out of 495061
+ 25192 string characters out of 1182622
+ 83458 words of memory out of 3000000
+ 4835 multiletter control sequences out of 15000+50000
  36554 words of font info for 70 fonts, out of 3000000 for 9000
  31 hyphenation exceptions out of 8191
  26i,8n,19p,378b,293s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/sh
-are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf-te
-xlive/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-texlive/fonts/type1/ur
-w/times/utmbi8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmr8a.pfb>
-</usr/share/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (3 pages, 296203 bytes).
+{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/
+share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf-
+texlive/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-texlive/fonts/type1/
+urw/times/utmbi8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmr8a.pf
+b></usr/share/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb>
+Output written on paper.pdf (3 pages, 297590 bytes).
 PDF statistics:
  35 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

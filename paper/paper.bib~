@@ -14,6 +14,15 @@
       url = "http://tools.ietf.org/html/rfc1633"
 }
 
+@misc{mpls,
+      author = "E. Rosen and Y. Rekhter",
+      title = "BGP/MPLS VPNs",
+      month = "March",
+      year = "1999",
+      url = "http://tools.ietf.org/html/rfc2547"
+}
+
+
 @article{mckeown2008openflow,
   title={OpenFlow: enabling innovation in campus networks},
   author={McKeown, N. and Anderson, T. and Balakrishnan, H. and Parulkar, G. and Peterson, L. and Rexford, J. and Shenker, S. and Turner, J.},
@@ -49,6 +58,33 @@
   pages={12--12},
   year={2011},
   organization={USENIX Association}
+}
+
+@inproceedings{egilmez2011scalable,
+  title={Scalable video streaming over OpenFlow networks: An optimization framework for QoS routing},
+  author={Egilmez, H.E. and Gorkemli, B. and Tekalp, A.M. and Civanlar, S.},
+  booktitle={Image Processing (ICIP), 2011 18th IEEE International Conference on},
+  pages={2241--2244},
+  year={2011},
+  organization={IEEE}
+}
+
+@inproceedings{civanlar2010qos,
+  title={A QoS-enabled OpenFlow environment for Scalable Video streaming},
+  author={Civanlar, S. and Parlakisik, M. and Tekalp, A.M. and Gorkemli, B. and Kaytaz, B. and Onem, E.},
+  booktitle={GLOBECOM Workshops (GC Wkshps), 2010 IEEE},
+  pages={351--356},
+  year={2010},
+  organization={IEEE}
+}
+
+@inproceedings{sharma2011enabling,
+  title={Enabling fast failure recovery in OpenFlow networks},
+  author={Sharma, S. and Staessens, D. and Colle, D. and Pickavet, M. and Demeester, P.},
+  booktitle={Design of Reliable Communication Networks (DRCN), 2011 8th International Workshop on the},
+  pages={164--171},
+  year={2011},
+  organization={IEEE}
 }
 
 
