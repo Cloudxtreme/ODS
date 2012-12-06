@@ -31,10 +31,10 @@ public class NetworkStatistics extends TimerTask {
 	protected int period;
 	
 	//a map with the previous loads of switches in the network
-	protected static Map<IOFSwitch, Long> loadHistory;
+	protected static Map<Long, Long> loadHistory;
 	
 	//a map that keeps record of the current load
-	protected static Map<IOFSwitch, Long> currentLoad;
+	protected static Map<Long, Long> currentLoad;
 	
 	/**
 	 * Creates a new statistics task
@@ -44,8 +44,8 @@ public class NetworkStatistics extends TimerTask {
 	public NetworkStatistics(IFloodlightProviderService floodlightProvider, int period){
 		this.floodlightProvider = floodlightProvider;
 		this.period = period;
-		loadHistory = new HashMap<IOFSwitch, Long>();
-		currentLoad = new HashMap<IOFSwitch, Long>();
+		loadHistory = new HashMap<Long, Long>();
+		currentLoad = new HashMap<Long, Long>();
 	}
 	
 	/**
@@ -92,18 +92,18 @@ public class NetworkStatistics extends TimerTask {
 		    	 
 		    	//determine the new load
 		    	long newload = 0;		    	
-		    	if(currentLoad.containsKey(sw)){
+		    	if(currentLoad.containsKey(sw.getId())){
 		    		//we've seen the switch before
-		    		newload = reply.getTransmitBytes() - loadHistory.get(sw);
-			    	loadHistory.put(sw, reply.getTransmitBytes());  		
+		    		newload = reply.getTransmitBytes() - loadHistory.get(sw.getId());
+			    	loadHistory.put(sw.getId(), reply.getTransmitBytes());  		
 		    	} else {
 		    		//this is the first time we see the switch
 		    		newload = reply.getTransmitBytes();		
-		    		loadHistory.put(sw,newload);
+		    		loadHistory.put(sw.getId(),newload);
 		    	}				    	
 		    	
-		    	currentLoad.put(sw, newload / (period / 1000));
-		    	//System.out.println("Load for switch: " + transmittedBytes.get(sw) + " bytes/second");
+		    	currentLoad.put(sw.getId(), newload / (period / 1000));
+		    	//System.out.println("Load for switch: " + currentLoad.get(sw) + " bytes/second");
 		    }
 		}
 	}
@@ -112,9 +112,10 @@ public class NetworkStatistics extends TimerTask {
 	 * Determines the load of all the switches in the network
 	 * @return a map with loads of all switches or null if the network has no switches
 	 */
-	public static synchronized Map<IOFSwitch, Long> networkLoad(){
+	public static synchronized Map<Long, Long> networkLoad(){
 		//return the whole map with loads
 		if(!currentLoad.isEmpty()){
+			//System.out.println("Loads in map:" + currentLoad.size());
 			return currentLoad;
 		} else {
 			return null;
@@ -126,10 +127,11 @@ public class NetworkStatistics extends TimerTask {
 	 * @param sw the switch
 	 * @return the load of the given switch or null if the switch is not in the network
 	 */
-	public static synchronized Long switchLoad(IOFSwitch sw){	
+	public static synchronized Long switchLoad(long switchId){	
 		//lookup the load in the map
-		if(currentLoad != null && currentLoad.containsKey(sw)){
-			return loadHistory.get(sw);
+		if(currentLoad != null && currentLoad.containsKey(switchId)){
+			//System.out.println("Load for: " + sw + " is: " + loadHistory.get(sw));
+			return currentLoad.get(switchId);
 		} else {
 			return null;
 		}
