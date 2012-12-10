@@ -193,7 +193,9 @@
 
 % *** SPECIALIZED LIST PACKAGES ***
 %
-%\usepackage{algorithmic}
+\usepackage{algorithmic}
+\usepackage{algorithm}% http://ctan.org/pkg/algorithms
+%\usepackage{algpseudocode}% http://ctan.org/pkg/algorithmicx
 % algorithmic.sty was written by Peter Williams and Rogerio Brito.
 % This package provides an algorithmic environment fo describing algorithms.
 % You can use the algorithmic environment in-text or within a figure
@@ -358,7 +360,7 @@
 % author names and affiliations
 % use a multiple column layout for up to three different
 % affiliations
-\author{\IEEEauthorblockN{Piet Smet, Sander Vrijders, Youri Flement, Bruno Chevalier}
+\author{\IEEEauthorblockN{Sander Vrijders, Piet Smet, Youri Flement, Bruno Chevalier}
 \IEEEauthorblockA{Ghent University - iMinds, Department of Information Technology,\\ 
 Gaston Crommenlaan 8 bus 201, 9050 Gent, Belgium}
 }
@@ -446,13 +448,13 @@ Several efforts have been made to give precedence to certain types of traffic, d
 There are solutions available for QoS support in a TCP/IP-based network, 
 such as DiffServ \cite{diffserv} and IntServ \cite{intserv}, but these 
 solutions only work well in managed networks.
-Tunneling with MPLS offers a partial solution, but it lacks real-time reconfigurability and adaptivity. \cite{mpls}\\
+Tunneling with MPLS offers a partial solution, but it lacks real-time reconfigurability and adaptivity. \cite{mpls}
 
 Scalable Video Coding (SVC) \cite{schwarz2007overview} encodes the stream in a base layer along with several enhancement layers. 
 In order to obtain qualitative video streams, it is important that the base layer has no 
 packet loss and minimal delay, which is hard to accomplish without support for QoS. 
 To solve this issue we need to differentiate between the different flows and route these flows 
-differently than normal best effort traffic.\\
+differently than normal best effort traffic.
 
 We use OpenFlow \cite{mckeown2008openflow} in order to provide QoS support. 
 OpenFlow is a protocol for switches, allowing to control the packet forwarding process.
@@ -512,19 +514,19 @@ the use case may be different, the principal is the same as the one applied in o
 When all traffic follows the same path, chances of congestion and packet loss 
 occurring increase significantly. OpenFlow allows us to set up different paths for different flows, which 
 improves the throughput of our QoS flows and also decrease the network load on links used by best 
-effort traffic.\\
+effort traffic.
 
 The idea to provide a minimal quality for SVC encoded videos originates from 
 research described in \cite{egilmez2011scalable} and \cite{civanlar2010qos}. 
 By routing the base layer as a lossless QoS flow, which means there is no packet loss, they can 
 guarantee a minimal quality to the user. Ideally, the enhancement layers will also be delivered 
 without packet loss or delay but when congestion occurs they demote the enhancement layers to best 
-effort traffic and prioritize the base layer.\\
+effort traffic and prioritize the base layer.
 
 \begin{figure}[htb]
 \centering
 \includegraphics[width=\linewidth]{fig/SVC_OpenFlow_flow}
-\caption{Simulation Results}
+\caption{General problem}
 \label{fig_sim}
 \end{figure}
 
@@ -533,7 +535,7 @@ The enhancement layers are lossy QoS traffic, which means they may still follow 
 route than best-effort traffic, but some packet loss is allowed.
 These principals are shown in Figure \ref{fig_sim}.
 We also enable fast failure recovery when a link fails, as described in \cite{sharma2011enabling}.
-Also, we present experimental results, whereas other research only presents simulations.\\
+Also, we present experimental results, whereas other research only presents simulations.
 
 \section{Design considerations}
 
@@ -549,7 +551,7 @@ In designing the OpenFlow application, we considered the following.
 
 These observations show that packet loss and path length are important in defining algorithms: 
 the algorithm must find a balance between maintaining low packet loss of the best effort 
-traffic and the delay of QoS flows, caused by using longer paths.\\
+traffic and the delay of QoS flows, caused by using longer paths.
 
 \section{Architecture}
 
@@ -559,7 +561,7 @@ the following segment is requested using HTTP.
 If the next segment doesn't arrive in time, it is skipped.
 In the case of SVC streaming the video stream is first split into different layers (base and enhancement layers).
 These layers are then further split into segments of different size, but equal playtime.
-If a segment of a layer does not arrive in time, it is skipped.\\
+If a segment of a layer does not arrive in time, it is skipped.
 
 Each OpenFlow network contains at least one controller which is responsible for managing all the switches. 
 An OpenFlow switch forwards packets 
@@ -567,7 +569,7 @@ to the controller if the packet does not match any forwarding entry in the forwa
 Matching is done on the longest prefix. Wildcards are allowed in the forwarding table.
 A filter in the controller separates QoS flows from 
 other traffic, based on the TCP port, after which the controller can choose a path for the different layers. 
-When the controller calculates a path for a layer, the new forwarding rules are sent to the switches.\\
+When the controller calculates a path for a layer, the new forwarding rules are sent to the switches.
 
 The different paths are calculated using Dijkstra. 
 Depending on the current load of the network, a cost is given to each link.
@@ -575,20 +577,64 @@ The controller must be able to obtain the load any time from any switch in the n
 new flow tables. We implemented a monitor module on the controller to gather all network 
 statistics. Besides polling for statistics, a switch also forwards events to the controller when 
 they occur, such as a link failure. These events are also act upon by the controller, 
-by recalculating a different path for every flow.\\
+by recalculating a different path for every flow.
 
 \section{Algorithms}
 
-For the base layer...
+Because the base layer has to be delivered lossless, the weights given to each link depends 
+on the load of the switches connected to these switches.
+The minimum value a link can get is 1, so the hop count is used when the network experiences no load.
+The pseudocode can be seen in Algorithm \ref{alg1}. This algorithm is executed on receiving a packet-in event 
+from a switch with TCP port set to 8080.
 
-For the enhancement layers... 
+\begin{algorithm}
+\caption{Calculate route for base layer}
+\label{alg1}
+\begin{algorithmic}
+\FORALL{$link$ in $linksInNetwork$}
+\STATE $leftSwitch \leftarrow link.getSrc()$
+\STATE $rightSwitch \leftarrow link.getDst()$
+\STATE $loadLeft \leftarrow monitorModule.getLoad(LeftSwitch)$
+\STATE $loadRight \leftarrow monitorModule.getLoad(rightSwitch)$
+\STATE $totalLoad \leftarrow loadLeft + loadRight + 1$
+\STATE $linkMap.put(link,weight)$
+\ENDFOR
+$Dijkstra(linkMap)$
+\end{algorithmic}
+\end{algorithm}
+
+For the enhancement layers we followed the same tactic, but we also hold the route that the 
+base layer is following into account. This means we gave a higher cost to the links that the base layer was using, 
+thus ensuring the base layer is delivered lossless. The pseudocode for this algorithm can be seen in Algorithm \ref{alg2}.
+It is executed on packet-in events with the TCP port of the packet set to 8081,8082 or 8083.
+The constant extraLoad can be tweaked to render optimal performance. It must be set high enough to ensure 
+the route the base layer is using is not used, unless the traffic on the other links is much higher.
+
+\begin{algorithm}
+\caption{Calculate route for base layer}
+\label{alg2}
+\begin{algorithmic}
+\FORALL{$link$ in $linksInNetwork$}
+\STATE $leftSwitch \leftarrow link.getSrc()$
+\STATE $rightSwitch \leftarrow link.getDst()$
+\STATE $loadLeft \leftarrow monitorModule.getLoad(LeftSwitch)$
+\STATE $loadRight \leftarrow monitorModule.getLoad(rightSwitch)$
+\STATE $totalLoad \leftarrow loadLeft + loadRight + 1$
+\IF{$linksRouteBaseLayer.contains(link)$}
+\STATE $totalLoad \leftarrow totalLoad + Constants.extraLoad()$
+\ENDIF
+\STATE $linkMap.put(link,weight)$
+\ENDFOR
+$Dijkstra(linkMap)$
+\end{algorithmic}
+\end{algorithm}
 
 \section{Experimental results}
 
 All of the experiments are performed on the iLab.t Virtual Wall at iMinds.
 The Virtual Wall is derived from Emulab, developed at Utah university.
 The Virtual Wall facility is a generic test environment for advanced network, 
-distributed software and service evaluation, and supports scalability research.\\
+distributed software and service evaluation, and supports scalability research.
 
 The Virtual Wall facilities consist of 100 nodes 
 (dual processor, dual core servers, 4x1 or 6x1 Gb/s interfaces per node)
@@ -598,9 +644,17 @@ Each server is connected with 4 or 6 gigabit Ethernet links to the switch.
 The Virtual Wall nodes can be assigned different functionalities ranging 
 from terminal, server, network node, and impairment node. 
 Each node is fully dedicated and under full control of one experiment, 
-so the users can test all kind of operating system images and configurations \cite{virtual}.\\
+so the users can test all kind of operating system images and configurations \cite{virtual}.
 
-Test scenario (client/server - filter based on port) + metrics for result + present results\\
+We created the topology shown in Figure \ref{fig:topology}, on which we performed the experiments.
+
+\begin{figure}[htb]
+\centering
+\includegraphics[scale=0.4]{fig/topology}
+\caption{Topology used}
+\label{fig:topology}
+\end{figure}
+
 An evaluation metric has to represent a value which is relevant to what we want to improve, which is why a measurement must:
 \begin{itemize}
 	\item represent the quality of the received video
@@ -608,8 +662,6 @@ An evaluation metric has to represent a value which is relevant to what we want 
 	\item represent the impact on best effort traffic
 \end{itemize}
 To measure quality of the video we have chosen for the PSNR value of the received video compared to the raw footage. The higher the PSNR value, the better the frames were preserved during transfer. To measure the performance of the network we used the bitrate of all traffic. We also show the packet loss of best effort traffic caused by prioritizing the QoS flow...
-
-
 
 \section{Conclusion}
 The conclusion goes here.
