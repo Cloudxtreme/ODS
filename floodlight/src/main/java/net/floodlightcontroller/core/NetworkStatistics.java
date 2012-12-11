@@ -101,9 +101,10 @@ public class NetworkStatistics extends TimerTask {
 		    		newload = reply.getTransmitBytes();		
 		    		loadHistory.put(sw.getId(),newload);
 		    	}				    	
-		    	
-		    	currentLoad.put(sw.getId(), newload / (period / 1000));
-		    	//System.out.println("Load for switch: " + currentLoad.get(sw) + " bytes/second");
+		    	//System.out.println("Capa: " + sw.getCapabilities() * 1024);
+		    	//System.out.println("Load: " + newload);
+		    	currentLoad.put(sw.getId(), (sw.getCapabilities() * 1024) - newload);
+		    	//System.out.println("Load for switch: " + currentLoad.get(sw.getId()));
 		    }
 		}
 	}
@@ -118,7 +119,8 @@ public class NetworkStatistics extends TimerTask {
 			//System.out.println("Loads in map:" + currentLoad.size());
 			return currentLoad;
 		} else {
-			return null;
+			//niet goed, moet null terug geven, eerst aanpassen in topo instance
+			return currentLoad;
 		}		
 	}
 	
