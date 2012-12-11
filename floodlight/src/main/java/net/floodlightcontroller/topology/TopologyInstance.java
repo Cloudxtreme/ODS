@@ -647,75 +647,10 @@ public class TopologyInstance {
 	//	if (tcpport != 0) {
 			// TODO: Construct a map with link weights
 			//indexen via switch ID
+		if (tcpport != 5001 && tcpport != 100) {
+			/*
 			Map<Long, Long> load = NetworkStatistics.networkLoad();
 			Map<Link, Integer> linkCost = new HashMap<Link, Integer>();
-
-			if (tcpport == 8080) {
-				for (NodePortTuple nt : tunnelPorts) {
-					if (switchPortLinks.get(nt) == null)
-						continue;
-					for (Link link : switchPortLinks.get(nt)) {
-						if (link == null)
-							continue;
-
-						// Here you have the link, now add a weight
-						long src = link.getSrc();
-						long dst = link.getDst();
-						
-						long srcLoad = load.get(src);
-						long dstLoad = load.get(dst);
-
-						// SAFE?
-						int weight = (int) (srcLoad + dstLoad) + 1;
-
-						linkCost.put(link, weight);
-					}
-				}
-			} else if (tcpport == 8081) {
-				for (NodePortTuple nt : tunnelPorts) {
-					if (switchPortLinks.get(nt) == null)
-						continue;
-					for (Link link : switchPortLinks.get(nt)) {
-						if (link == null)
-							continue;
-
-						// Here you have the link, now add a weight
-						long src = link.getSrc();
-						long dst = link.getDst();
-
-						long srcLoad = load.get(src);
-						long dstLoad = load.get(dst);
-
-						// SAFE?
-						int weight = (int) (srcLoad + dstLoad) + 1;
-
-						linkCost.put(link, weight);
-					}
-				}
-			} else if (tcpport == 8082) {
-				for (NodePortTuple nt : tunnelPorts) {
-					if (switchPortLinks.get(nt) == null)
-						continue;
-					for (Link link : switchPortLinks.get(nt)) {
-						if (link == null)
-							continue;
-
-						// Here you have the link, now add a weight
-						long src = link.getSrc();
-						long dst = link.getDst();
-
-						long srcLoad = load.get(src);
-						long dstLoad = load.get(dst);
-
-						// SAFE?
-						int weight = (int) (srcLoad + dstLoad) +1;
-
-						linkCost.put(link, weight);
-					}
-				}
-			//} else if (tcpport == 8083) {
-			} else { 
-				
 				
 				for (Set<Link> linkset: switchPortLinks.values()) {
 					for (Link link : linkset) {
@@ -725,22 +660,22 @@ public class TopologyInstance {
 						// Here you have the link, now add a weight
 						long src = link.getSrc();
 						long dst = link.getDst();
-
-						long srcLoad = load.get(src);
-						long dstLoad = load.get(dst);
-
-						// SAFE?
-						int weight = (int) (srcLoad + dstLoad) +1;
-						log.debug("{}  {}",src,dst);
-						log.debug("{} \n",weight);
-						linkCost.put(link, weight);
+						if (src != 0 && dst != 0) {
+							long srcLoad = load.get(src);
+							long dstLoad = load.get(dst);
+							
+							// SAFE?
+							int weight = (int) (srcLoad + dstLoad) +1;
+							log.debug("{}  {}",src,dst);
+							log.debug("{}",weight);
+							linkCost.put(link, weight);
+						}
 					}
 				}
-			}
-
 			// Re-call calculateShortestPathTreeInCluster with link weights
 			calculateShortestPathTreeInClusters(linkCost);
-	//	}
+			*/
+		}
 		if (destinationRootedTrees == null)
 			return null;
 		if (destinationRootedTrees.get(dstId) == null)
@@ -777,7 +712,7 @@ public class TopologyInstance {
 		if (log.isTraceEnabled()) {
 			log.trace("buildroute: {}", result);
 		}
-		
+		if (result != null) {
 		for (NodePortTuple nt : result.getPath()) {
 			if (switchPortLinks.get(nt) == null)
 				continue;
@@ -791,6 +726,7 @@ public class TopologyInstance {
 
 				log.debug("path: {} -> {}",src,dst);
 			}
+		}
 		}
 		calculateShortestPathTreeInClusters();
 
