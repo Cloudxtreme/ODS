@@ -1,0 +1,3 @@
+0x65b094b3	br_should_route_hook	/users/stud16/openv/openvswitch-1.1.0pre2/datapath/linux-2.6/openvswitch_mod	EXPORT_SYMBOL
+0xb27f4b0e	get_dp	/users/stud16/openv/openvswitch-1.1.0pre2/datapath/linux-2.6/openvswitch_mod	EXPORT_SYMBOL_GPL
+0x19fae545	dp_ioctl_hook	/users/stud16/openv/openvswitch-1.1.0pre2/datapath/linux-2.6/openvswitch_mod	EXPORT_SYMBOL
