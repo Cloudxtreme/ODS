@@ -360,7 +360,7 @@
 % author names and affiliations
 % use a multiple column layout for up to three different
 % affiliations
-\author{\IEEEauthorblockN{Piet Smet, Sander Vrijders, Youri Flement, Bruno Chevalier}
+\author{\IEEEauthorblockN{Sander Vrijders, Piet Smet, Youri Flement, Bruno Chevalier}
 \IEEEauthorblockA{Ghent University - iMinds, Department of Information Technology,\\ 
 Gaston Crommenlaan 8 bus 201, 9050 Gent, Belgium}
 }
@@ -591,68 +591,50 @@ from a switch with TCP port set to 8080.
 \caption{Calculate route for base layer}
 \label{alg1}
 \begin{algorithmic}
-
 \FORALL{$link$ in $linksInNetwork$}
 \STATE $leftSwitch \leftarrow link.getSrc()$
 \STATE $rightSwitch \leftarrow link.getDst()$
-
 \STATE $loadLeft \leftarrow monitorModule.getLoad(LeftSwitch)$
 \STATE $loadRight \leftarrow monitorModule.getLoad(rightSwitch)$
-
 \STATE $totalLoad \leftarrow loadLeft + loadRight + 1$
-
 \STATE $linkMap.put(link,weight)$
-
 \ENDFOR
-
 $Dijkstra(linkMap)$
-
-
 \end{algorithmic}
 \end{algorithm}
-
 
 For the enhancement layers we followed the same tactic, but we also hold the route that the 
 base layer is following into account. This means we gave a higher cost to the links that the base layer was using, 
 thus ensuring the base layer is delivered lossless. The pseudocode for this algorithm can be seen in Algorithm \ref{alg2}.
 It is executed on packet-in events with the TCP port of the packet set to 8081,8082 or 8083.
+The constant extraLoad can be tweaked to render optimal performance. It must be set high enough to ensure 
+the route the base layer is using is not used, unless the traffic on the other links is much higher.
 
 \begin{algorithm}
 \caption{Calculate route for base layer}
 \label{alg2}
 \begin{algorithmic}
-
 \FORALL{$link$ in $linksInNetwork$}
 \STATE $leftSwitch \leftarrow link.getSrc()$
 \STATE $rightSwitch \leftarrow link.getDst()$
-
 \STATE $loadLeft \leftarrow monitorModule.getLoad(LeftSwitch)$
 \STATE $loadRight \leftarrow monitorModule.getLoad(rightSwitch)$
-
 \STATE $totalLoad \leftarrow loadLeft + loadRight + 1$
-
+\IF{$linksRouteBaseLayer.contains(link)$}
+\STATE $totalLoad \leftarrow totalLoad + Constants.extraLoad()$
+\ENDIF
 \STATE $linkMap.put(link,weight)$
-
 \ENDFOR
-
-\FORALL{$link$ in $routeBaseLayer$}
-\STATE  $leftSwitch \leftarrow link.getSrc()$
-
-\ENDFOR
-
 $Dijkstra(linkMap)$
-
-
 \end{algorithmic}
 \end{algorithm}
-
 
 \section{Experimental results}
 
 All of the experiments are performed on the iLab.t Virtual Wall at iMinds.
 The Virtual Wall is derived from Emulab, developed at Utah university.
 The Virtual Wall facility is a generic test environment for advanced network, 
-distributed software and service evaluation, and supports scalability research.\\
+distributed software and service evaluation, and supports scalability research.
 
 The Virtual Wall facilities consist of 100 nodes 
 (dual processor, dual core servers, 4x1 or 6x1 Gb/s interfaces per node)
@@ -662,22 +644,35 @@ Each server is connected with 4 or 6 gigabit Ethernet links to the switch.
 The Virtual Wall nodes can be assigned different functionalities ranging 
 from terminal, server, network node, and impairment node. 
 Each node is fully dedicated and under full control of one experiment, 
-so the users can test all kind of operating system images and configurations \cite{virtual}.\\
+so the users can test all kind of operating system images and configurations \cite{virtual}.
 
-Test scenario (client/server - filter based on port) + metrics for result + present results\\
-An evaluation metric has to represent a value which is relevant to what we want to improve, which is why a measurement must:
-\begin{itemize}
-	\item represent the quality of the received video
-	\item represent the performance of the network
-	\item represent the impact on best effort traffic
-\end{itemize}
-To measure quality of the video we have chosen for the PSNR value of the received video compared to the raw footage. The higher the PSNR value, the better the frames were preserved during transfer. To measure the performance of the network we used the bitrate of all traffic. We also show the packet loss of best effort traffic caused by prioritizing the QoS flow...
+We created the topology shown in Figure \ref{fig:topology}, on which we performed the experiments.
+Each link has a 1 Gb connection. The switches are running OpenVSwitch instead of the reference user-space switch, 
+because Floodlight won't work with the reference user-space switch.
 
+\begin{figure}[htb]
+\centering
+\includegraphics[scale=0.4]{fig/topology}
+\caption{Topology used}
+\label{fig:topology}
+\end{figure}
 
+To measure quality of the video we chose the PSNR value of the received video compared to the raw footage. 
+The higher the PSNR value, the better the frames were preserved during transfer. 
+A base layer has a low PSNR value, and every extra enhancement layer that is also received, 
+increases this value. In Figure \ref{fig:psnr} we show the PSNR value as a function of time.
 
 \section{Conclusion}
-The conclusion goes here.
+In this paper we described a way to perform quality optimization of video streaming.
+We do this by using HTTP adaptive streaming of an SVC encoded video stream, which is composed of a base layer and three enhancement layers.
+Each layer is routed differently, depending on the required Quality of Service. 
+The base layer is delivered as a lossless video stream. This means it is always delivered. It has the highest QoS priority.
+The enhancement layers are considered lossy video streams, which means they may not always arrive, 
+depending on the network load. We also implemented fast failure recovery. This means if a link fails, the routes get recalculated very fast, 
+rendering an optimal performance.
 
+In future work we will try to optimize the weights given to each link in the algorithm. 
+This will give an even higher quality optimization.
 
 
 %\subsection{Subsection Heading Here}
