@@ -34,7 +34,7 @@ public class SVCClient {
                     //Location ~= serverlocatie:8080/video_s0_l0.dat
                     String location = "http://" + Constants.SERVER_LOCATION + ":" + Constants.PORTS[i] + "/video_s" + k + "_l" + i + ".dat";
                     HttpGet httpget = new HttpGet(location);
-                    threads[i] = new GetSegment(httpclient, httpget, i);
+                    threads[i] = new GetSegment(httpclient, httpget, i,k);
                 }
 
 

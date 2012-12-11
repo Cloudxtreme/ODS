@@ -22,12 +22,14 @@ public class GetSegment extends Thread {
     private final HttpContext context;
     private final HttpGet httpget;
     private final int id;
+    private final int segment;
 
-    public GetSegment(HttpClient httpClient, HttpGet httpget, int id) {
+    public GetSegment(HttpClient httpClient, HttpGet httpget, int id, int segment) {
         this.httpClient = httpClient;
         this.context = new BasicHttpContext();
         this.httpget = httpget;
         this.id = id;
+        this.segment = segment;
     }
 
     public HttpGet getHttpget() {
@@ -38,7 +40,7 @@ public class GetSegment extends Thread {
 
     @Override
     public synchronized void run() {
-        System.out.println(id + " - about to get something from " + httpget.getURI());
+        //System.out.println(id + " - about to get something from " + httpget.getURI());
 
         try {
          
@@ -50,7 +52,8 @@ public class GetSegment extends Thread {
             HttpEntity entity = response.getEntity();
             if (entity != null) {
                 byte[] bytes = EntityUtils.toByteArray(entity);
-                System.out.println(id + " - " + httpget.getURI() + " - " + bytes.length + " bytes read");
+                //System.out.println(id + " - " + httpget.getURI() + " - " + bytes.length + " bytes read");
+                System.out.println(segment + " " + id);
             }
 
         } catch (Exception e) {
