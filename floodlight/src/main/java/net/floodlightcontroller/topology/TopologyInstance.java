@@ -661,7 +661,7 @@ public class TopologyInstance {
 						// Here you have the link, now add a weight
 						long src = link.getSrc();
 						long dst = link.getDst();
-
+						
 						long srcLoad = load.get(src);
 						long dstLoad = load.get(dst);
 
