@@ -1,18 +1,19 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.12.10)  11 DEC 2012 20:38
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.3.27)  11 DEC 2012 23:19
 entering extended mode
- %&-line parsing enabled.
-**paper.tex
-(./paper.tex
-LaTeX2e <2009/09/24>
-Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
-yphenation, farsi, arabic, croatian, bulgarian, ukrainian, russian, czech, slov
-ak, danish, dutch, finnish, french, basque, ngerman, german, german-x-2009-06-1
-9, ngerman-x-2009-06-19, ibycus, monogreek, greek, ancientgreek, hungarian, san
-skrit, italian, latin, latvian, lithuanian, mongolian2a, mongolian, bokmal, nyn
-orsk, romanian, irish, coptic, serbian, turkish, welsh, esperanto, uppersorbian
-, estonian, indonesian, interlingua, icelandic, kurmanji, slovenian, polish, po
-rtuguese, spanish, galician, catalan, swedish, ukenglish, pinyin, loaded.
-(./IEEEtran.cls
+**G:/Documents/UGent/2012-2013/ODS/Project/git/ODS/paper/paper.tex
+(G:/Documents/UGent/2012-2013/ODS/Project/git/ODS/paper/paper.tex
+LaTeX2e <2011/06/27>
+Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
+abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
+croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, ga
+lician, german, german-x-2009-06-19, greek, gujarati, hindi, hungarian, iceland
+ic, indonesian, interlingua, irish, italian, kannada, kurmanji, lao, latin, lat
+vian, lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerm
+an, ngerman-x-2009-06-19, nynorsk, oriya, panjabi, pinyin, polish, portuguese, 
+romanian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swis
+sgerman, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, u
+senglishmax, welsh, loaded.
+(G:\Documents\UGent\2012-2013\ODS\Project\git\ODS\paper\IEEEtran.cls
 Document Class: IEEEtran 2007/03/05 V1.7a by Michael Shell
 -- See the "IEEEtran_HOWTO" manual for usage information.
 -- http://www.michaelshell.org/tex/ieeetran/
@@ -23,7 +24,7 @@ Document Class: IEEEtran 2007/03/05 V1.7a by Michael Shell
 \@IEEEtrantmptoksA=\toks14
 LaTeX Font Info:    Try loading font information for OT1+ptm on input line 366.
 
-(/usr/share/texmf-texlive/tex/latex/psnfss/ot1ptm.fd
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1ptm.fd"
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 -- Using 8.5in x 11in (letter) paper.
@@ -96,33 +97,42 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <24> not available
 \@IEEEtmpitemindent=\dimen116
 \c@IEEEbiography=\count90
 \@IEEEtranrubishbin=\box26
-) (/usr/share/texmf-texlive/tex/latex/graphics/graphicx.sty
+) ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
 Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
 
-(/usr/share/texmf-texlive/tex/latex/graphics/keyval.sty
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
 Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \KV@toks@=\toks15
 )
-(/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
 Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
 
-(/usr/share/texmf-texlive/tex/latex/graphics/trig.sty
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\trig.sty"
 Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 )
-(/etc/texmf/tex/latex/config/graphics.cfg
-File: graphics.cfg 2009/08/28 v1.8 graphics configuration of TeX Live
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\graphics.cfg"
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
 )
 Package graphics Info: Driver file: pdftex.def on input line 91.
 
-(/usr/share/texmf-texlive/tex/latex/pdftex-def/pdftex.def
-File: pdftex.def 2010/03/12 v0.04p Graphics/color for pdfTeX
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def"
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty"
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/message (HO)
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty"
+Package: ltxcmds 2011/04/18 v1.20 LaTeX kernel commands for general use (HO)
+)
 \Gread@gobject=\count91
 ))
 \Gin@req@height=\dimen117
 \Gin@req@width=\dimen118
-) (./algorithmic.sty
+)
+(G:\Documents\UGent\2012-2013\ODS\Project\git\ODS\paper\algorithmic.sty
 Package: algorithmic 2009/08/24 v0.1 Document Style `algorithmic'
-(/usr/share/texmf-texlive/tex/latex/base/ifthen.sty
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ifthen.sty"
 Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
 )
 \c@ALC@unique=\count92
@@ -131,11 +141,12 @@ Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
 \c@ALC@depth=\count95
 \ALC@tlm=\skip44
 \algorithmicindent=\skip45
-) (./algorithm.sty
+)
+(G:\Documents\UGent\2012-2013\ODS\Project\git\ODS\paper\algorithm.sty
 Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
 nment
 
-(/usr/share/texmf-texlive/tex/latex/float/float.sty
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\float\float.sty"
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \c@float@type=\count96
 \float@exts=\toks16
@@ -145,9 +156,8 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 )
 \@float@every@algorithm=\toks18
 \c@algorithm=\count97
-) (./paper.aux)
-\openout1 = `paper.aux'.
-
+)
+(G:\Documents\UGent\2012-2013\ODS\Project\git\ODS\paper\paper.aux)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 353.
 LaTeX Font Info:    ... okay on input line 353.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 353.
@@ -161,7 +171,7 @@ LaTeX Font Info:    ... okay on input line 353.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 353.
 LaTeX Font Info:    ... okay on input line 353.
 
-(/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
+("C:\Program Files (x86)\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count98
 \scratchdimen=\dimen119
@@ -172,6 +182,7 @@ LaTeX Font Info:    ... okay on input line 353.
 \MPscratchCnt=\count101
 \MPscratchDim=\dimen120
 \MPnumerator=\count102
+\makeMPintoPDFobject=\count103
 \everyMPtoPDFconversion=\toks20
 )
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -188,25 +199,35 @@ Overfull \hbox (6.6462pt too wide) in paragraph at lines 477--484
 <fig/openflow1.png, id=1, 435.74559pt x 232.39764pt>
 File: fig/openflow1.png Graphic file (type png)
  <use fig/openflow1.png>
+Package pdftex.def Info: fig/openflow1.png used on input line 490.
+(pdftex.def)             Requested size: 261.44937pt x 139.43965pt.
+
 Overfull \hbox (9.44937pt too wide) in paragraph at lines 490--491
  [][] 
  []
 
-[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+[1{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}
 
 
- <./fig/openflow1.png (PNG copy)>] <fig/SVC_OpenFlow_flow.png, id=9, 614.295pt 
-x 307.90031pt>
+ <G:/Documents/UGent/2012-2013/ODS/Project/git/ODS/paper/fig/openflow1.png>]
+<fig/SVC_OpenFlow_flow.png, id=9, 614.295pt x 307.90031pt>
 File: fig/SVC_OpenFlow_flow.png Graphic file (type png)
 
 <use fig/SVC_OpenFlow_flow.png>
+Package pdftex.def Info: fig/SVC_OpenFlow_flow.png used on input line 528.
+(pdftex.def)             Requested size: 252.0pt x 126.31041pt.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 544.
- [2 <./fig/SVC_OpenFlow_flow.png (PNG copy)>]
-<fig/topology.pdf, id=14, 627.34375pt x 340.27126pt>
-File: fig/topology.pdf Graphic file (type pdf)
- <use fig/topology.pdf>
-(./paper.bbl [3 <./fig/topology.pdf>]
+ [2 <G:/Documents/UGent/2012-2013/ODS/Project/git/ODS/paper/fig/SVC_OpenFlow_fl
+ow.png>]
+<fig/topology.png, id=14, 481.8pt x 273.27094pt>
+File: fig/topology.png Graphic file (type png)
+ <use fig/topology.png>
+Package pdftex.def Info: fig/topology.png used on input line 655.
+(pdftex.def)             Requested size: 192.71658pt x 109.30643pt.
+
+(G:\Documents\UGent\2012-2013\ODS\Project\git\ODS\paper\paper.bbl [3 <G:/Docume
+nts/UGent/2012-2013/ODS/Project/git/ODS/paper/fig/topology.png>]
 Underfull \hbox (badness 3838) in paragraph at lines 88--91
 []\OT1/ptm/m/n/8 ``ilab.t vir-tual wall,'' 2012. [On-line]. Avail-able:
  []
@@ -225,26 +246,28 @@ Before submitting the final camera ready copy, remember to:
 
 [4
 
-] (./paper.aux) ) 
+] (G:\Documents\UGent\2012-2013\ODS\Project\git\ODS\paper\paper.aux) ) 
 Here is how much of TeX's memory you used:
- 1918 strings out of 493848
- 28520 string characters out of 1152822
- 88770 words of memory out of 3000000
- 5209 multiletter control sequences out of 15000+50000
+ 2130 strings out of 494045
+ 32661 string characters out of 3145969
+ 92128 words of memory out of 3000000
+ 5431 multiletter control sequences out of 15000+200000
  37661 words of font info for 71 fonts, out of 3000000 for 9000
- 717 hyphenation exceptions out of 8191
- 26i,8n,19p,228b,440s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/sh
-are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-t
-exlive/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts
-/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/publ
-ic/amsfonts/cm/cmsy7.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmb8a
-.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmbi8a.pfb></usr/share/te
-xmf-texlive/fonts/type1/urw/times/utmr8a.pfb></usr/share/texmf-texlive/fonts/ty
-pe1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (4 pages, 474445 bytes).
+ 718 hyphenation exceptions out of 8191
+ 27i,8n,19p,318b,440s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Progr
+am Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program Files (x8
+6)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files (x86)
+/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files (x86)/Mi
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/MiKT
+eX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files (x86)/MiKTeX 
+2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/t
+ype1/urw/times/utmbi8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/t
+imes/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmri8
+a.pfb>
+Output written on paper.pdf (4 pages, 349693 bytes).
 PDF statistics:
- 207 PDF objects out of 1000 (max. 8388607)
+ 51 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
